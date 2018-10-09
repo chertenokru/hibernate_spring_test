@@ -45,44 +45,22 @@ public class Launcher {
             }
              while (true);
         } finally {
-            factory.close();
             session.close();
+            factory.close();
         }
 
     }
 
     private static void showStudents(Session session) {
-        List<Student> studentList= session.createQuery("from Student").list();
-        for (Student student:studentList ) {
-            System.out.println("");
-            System.out.printf("Студент : %s\n",student.getName());
-            System.out.println("===========================================");
-            for (Education education : student.getEducations()) {
-                System.out.printf("Курс - %s, занятий - %d, пройдено - %d, текущий бал - %d \n",
-                        education.getCourse().getDescription(),education.getCourse().getCourseLength(),education.getCompleted(),education.getScore()   );
             }
-            
-        }
-
-    }
 
     private static void showCourses(Session session) {
-        List<Course> courseList  = session.createQuery("from Course").list();
-        for (Course course:courseList ) {
-            System.out.println("");
-            System.out.printf("Курс : %s , занятий - %d\n",course.getDescription(),course.getCourseLength());
-            System.out.println("===========================================");
-            for (Education education: course.getEducations()) {
-                System.out.printf("Студент - %s,  пройдено - %d, текущий бал - %d \n",
-                        education.getCourse().getDescription(),education.getCompleted(),education.getScore()   );
-            }
 
-        }
 
     }
 
     private static void generateData(Session session) {
-        System.out.printf(" Удалено записей об обучении - %s\n ",session.createQuery("delete from Education").executeUpdate());
+        //System.out.printf(" Удалено записей об обучении - %s\n ",session.createQuery("delete from Education").executeUpdate());
         System.out.printf(" Удалено записей о курсах - %s\n ",session.createQuery("delete from Course").executeUpdate());
         System.out.printf(" Удалено записей о студентах - %s\n ",session.createQuery("delete from Student").executeUpdate());
         scanner.nextLine();
@@ -101,18 +79,14 @@ public class Launcher {
             Student student = new Student();
             student.setName(studentName[i]);
 
-            if (student.getEducations() == null)
-                student.setEducations(new ArrayList<Education>());
+            if (student.getCourses() == null)
+                student.setCourses(new ArrayList<Course>());
 
 
             for (int j =0;j<(random.nextInt(courseName.length-1)+1);j++){
-                Education education = new Education();
-                education.setStudent(student);
                 Course course = (Course) session.createQuery("from Course where description =:desc").setParameter("desc", courseName[random.nextInt(courseName.length)]).list().get(0);
-                education.setCourse(course);
-                education.setCompleted(random.nextInt(course.getCourseLength() - 1) + 1);
-                education.setScore(education.getCompleted() * 5);
-                student.getEducations().add(education);
+
+                student.getCourses().add(course);
                // session.save(education);
             }
             session.save(student);

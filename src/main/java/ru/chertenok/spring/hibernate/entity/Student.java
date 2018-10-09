@@ -15,8 +15,14 @@ public class Student {
 
 
 
-    @OneToMany (mappedBy = "student",cascade = CascadeType.ALL)
-    private List<Education> educations;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "education",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+
+    private List<Course> courses;
 
 
     public int getId() {
@@ -35,11 +41,11 @@ public class Student {
         this.name = name;
     }
 
-    public List<Education> getEducations() {
-        return educations;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setEducations(List<Education> educations) {
-        this.educations = educations;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

@@ -2,16 +2,17 @@ package ru.chertenok.spring.hibernate.entity;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="education")
+//@Entity
+//@Table(name="education")
+@Deprecated
 public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="student_id")
     private Student student;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "course_id")
     private Course course;
     private int score;

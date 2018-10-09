@@ -1,11 +1,12 @@
 package ru.chertenok.spring.hibernate.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name="course")
-public class Course {
+public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -13,8 +14,8 @@ public class Course {
     @Column(name="length")
     private int courseLength;
 
-    @OneToMany( mappedBy = "course" )
-    private List<Education> educations;
+    @ManyToMany (mappedBy = "courses")
+    private List<Student> students;
 
 
     public int getId() {
@@ -41,11 +42,11 @@ public class Course {
         this.courseLength = courseLength;
     }
 
-    public List<Education> getEducations() {
-        return educations;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setEducations(List<Education> educations) {
-        this.educations = educations;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }
