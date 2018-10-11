@@ -2,6 +2,8 @@ package ru.chertenok.spring.hibernate.services;
 
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +27,9 @@ public class StudentService {
 
 
 
+
     public List<Student> getStudentsList(){
-        List<Student> studentList = (List<Student>)studentRepository.findAll();
+        List<Student> studentList = (List)studentRepository.findAll();
         return studentList;
     }
 

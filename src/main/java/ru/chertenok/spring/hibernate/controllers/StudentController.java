@@ -2,6 +2,7 @@ package ru.chertenok.spring.hibernate.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,13 @@ public class StudentController {
     @RequestMapping("/list")
     public String studentsList(Model model){
         List<Student> studentList = studentService.getStudentsList();
+        for (Student student:studentList) {
+            if (student.getCourses() == null)
+                {
+                    System.out.println("null");
+                }
+
+        }
 
         model.addAttribute("studentList",studentList);
         return "student_list";

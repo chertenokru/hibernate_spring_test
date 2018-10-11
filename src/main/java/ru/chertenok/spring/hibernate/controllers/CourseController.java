@@ -11,7 +11,7 @@ import ru.chertenok.spring.hibernate.services.CourseService;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/corse")
+@RequestMapping("/course")
 public class CourseController {
     private CourseService courseService;
 
@@ -20,7 +20,7 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @RequestMapping("/course_detail/{id}")
+    @RequestMapping("/detail/{id}")
     public String getCourseDetail(Model model, @PathVariable int id){
         Optional<Course> course = courseService.getCourseyID(id);
         if (!course.isPresent()){

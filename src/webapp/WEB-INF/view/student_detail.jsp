@@ -27,7 +27,7 @@
         <td>${course.description}</td>
         <td>${course.courseLength}</td>
         <td>${course.students.size()}</td>
-        <td><a href="/cource/detail/${course.id}">Полная информация</a></td>
+        <td><a href="/course/detail/${course.id}">Полная информация</a></td>
     </tr>
     </c:forEach>
 </table>
