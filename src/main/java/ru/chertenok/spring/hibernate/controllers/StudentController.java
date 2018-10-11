@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.chertenok.spring.hibernate.entity.Student;
 import ru.chertenok.spring.hibernate.services.StudentService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,8 +26,9 @@ public class StudentController {
 
     @RequestMapping("/list")
     public String studentsList(Model model){
+        List<Student> studentList = studentService.getStudentsList();
 
-        model.addAttribute("studentList",studentService.getStudentsList());
+        model.addAttribute("studentList",studentList);
         return "student_list";
 
     }
