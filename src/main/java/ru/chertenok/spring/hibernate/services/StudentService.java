@@ -1,17 +1,14 @@
 package ru.chertenok.spring.hibernate.services;
 
 
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.entity.Student;
 import ru.chertenok.spring.hibernate.repositories.StudentRepository;
 
-import javax.persistence.Entity;
+import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,22 +23,31 @@ public class StudentService {
     }
 
 
+    @Transactional
+    public List<Student> getStudentsList(boolean fullLoad) {
+        List<Student> studentList = (List) studentRepository.findAll();
+        if (fullLoad) {
+            for (Student student : studentList) {
+               int i =  student.getCourses().size();
+            }
+        }
 
-
-    public List<Student> getStudentsList(){
-        List<Student> studentList = (List)studentRepository.findAll();
         return studentList;
     }
 
-    public Optional<Student> getStudentByID(int id){
-        return studentRepository.findById(id);
+    @Transactional
+    public Optional<Student> getStudentByID(int id) {
+        Optional<Student> student = studentRepository.findById(id);
+        if (student.isPresent()) student.get().getCourses().size();
+        return student;
     }
 
-    public List<Course> getCoursesByStudentID(int id){
+    @Transactional
+    public List<Course> getCoursesByStudentID(int id) {
         Optional<Student> student = studentRepository.findById(id);
-            return student.isPresent()?student.get().getCourses():Collections.emptyList();
-        }
+        return student.isPresent() ? student.get().getCourses() : Collections.emptyList();
     }
+}
 
 
 

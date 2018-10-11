@@ -2,7 +2,6 @@ package ru.chertenok.spring.hibernate.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,34 +23,26 @@ public class StudentController {
     }
 
 
-
     @RequestMapping("/list")
-    public String studentsList(Model model){
-        List<Student> studentList = studentService.getStudentsList();
-        for (Student student:studentList) {
-            if (student.getCourses() == null)
-                {
-                    System.out.println("null");
-                }
-
-        }
-
-        model.addAttribute("studentList",studentList);
+    public String studentsList(Model model) {
+        List<Student> studentList = studentService.getStudentsList(true);
+        studentList.sort((student, t1) -> student.getCourses().size()>t1.getCourses().size()?-1:1);
+        model.addAttribute("studentList", studentList);
         return "student_list";
 
     }
 
-    @RequestMapping(path = "/detail/{id}",method = RequestMethod.GET)
-    public String studentDetailByID(Model model, @PathVariable int id){
+    @RequestMapping(path = "/detail/{id}", method = RequestMethod.GET)
+    public String studentDetailByID(Model model, @PathVariable int id) {
 
         Optional<Student> student = studentService.getStudentByID(id);
         if (!student.isPresent()) {
-            model.addAttribute("message","Студент с таким ID не найден");
+            model.addAttribute("message", "Студент с таким ID не найден");
             return "page404";
         }
-        model.addAttribute("student",student.get());
-      //  model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
+        model.addAttribute("student", student.get());
+        // model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
 
-    return "student_detail";
+        return "student_detail";
     }
 }
