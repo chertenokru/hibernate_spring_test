@@ -14,14 +14,14 @@
 <body>
 <h1>Информация о студенте ${student.name}</h1>
 
-Студент обучается на ${courseList.size()} курсах:
+Студент обучается на ${student.courses.size()} курсах:
 <table>
     <th>Id</th>
     <th>Название</th>
     <th>Кол-во занятий</th>
     <th>Кол-во студентов</th>
     <th>Полная информация</th>
-    <c:forEach var="course" items="${courseList}">
+    <c:forEach var="course" items="${student.courses}">
     <tr>
         <td>${course.id}</td>
         <td>${course.description}</td>

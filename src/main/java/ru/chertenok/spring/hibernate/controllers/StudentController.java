@@ -42,7 +42,7 @@ public class StudentController {
             return "page404";
         }
         model.addAttribute("student",student.get());
-        model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
+      //  model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
 
     return "student_detail";
     }
