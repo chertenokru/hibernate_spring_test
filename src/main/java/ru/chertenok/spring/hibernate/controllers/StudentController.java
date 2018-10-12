@@ -1,11 +1,13 @@
 package ru.chertenok.spring.hibernate.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.chertenok.spring.hibernate.entity.Student;
 import ru.chertenok.spring.hibernate.services.StudentService;
 
@@ -24,10 +26,12 @@ public class StudentController {
 
 
     @RequestMapping("/list")
-    public String studentsList(Model model) {
-        List<Student> studentList = studentService.getStudentsList(true);
-        studentList.sort((student, t1) -> student.getCourses().size()>t1.getCourses().size()?-1:1);
+    public String studentsList(Model model, @RequestParam(name = "sortCourse",required = false, defaultValue = "false") boolean sort ) {
+        List<StudentService.StudentWithCoursesCount> studentList = studentService.getStudentsList(sort);
+        //studentList.sort((student, t1) -> student.getCourses().size()>t1.getCourses().size()?-1:1);
         model.addAttribute("studentList", studentList);
+
+
         return "student_list";
 
     }

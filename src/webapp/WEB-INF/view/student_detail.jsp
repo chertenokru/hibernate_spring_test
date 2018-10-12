@@ -10,6 +10,8 @@
 <html>
 <head>
     <title>Студент - ${student.name}</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 </head>
 <body>
 <h1>Информация о студенте ${student.name}</h1>
@@ -19,18 +21,16 @@
     <th>Id</th>
     <th>Название</th>
     <th>Кол-во занятий</th>
-    <th>Кол-во студентов</th>
     <th>Полная информация</th>
     <c:forEach var="course" items="${student.courses}">
     <tr>
         <td>${course.id}</td>
         <td>${course.description}</td>
         <td>${course.courseLength}</td>
-        <td>${course.students.size()}</td>
         <td><a href="/course/detail/${course.id}">Полная информация</a></td>
     </tr>
     </c:forEach>
 </table>
-
+<p> <a href="/">Назад</a></p>
 </body>
 </html>

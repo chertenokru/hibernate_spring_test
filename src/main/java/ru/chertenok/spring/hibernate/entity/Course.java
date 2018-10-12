@@ -14,7 +14,7 @@ public class Course implements Serializable {
     @Column(name="length")
     private int courseLength;
 
-    @ManyToMany (mappedBy = "courses",fetch = FetchType.EAGER)
+    @ManyToMany (mappedBy = "courses")
     private List<Student> students;
 
 

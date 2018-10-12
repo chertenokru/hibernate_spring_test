@@ -3,6 +3,8 @@
 <html>
 <head>
     <title>Список студентов</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css" />
 </head>
 <body>
 <h1>Список студентов</h1>
@@ -17,11 +19,11 @@
         <tr>
             <td>${student.id}</td>
             <td>${student.name}</td>
-            <td>${student.courses.size()}</td>
+            <td>${student.coursesCount}</td>
             <td><a href="/student/detail/${student.id}">Полная информация</a> </td>
         </tr>
     </c:forEach>
     </table>
-
+<p> <a href="/">Назад</a>
 </body>
 </html>

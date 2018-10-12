@@ -7,8 +7,9 @@ import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.entity.Student;
 import ru.chertenok.spring.hibernate.repositories.StudentRepository;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -23,16 +24,21 @@ public class StudentService {
     }
 
 
-    @Transactional
-    public List<Student> getStudentsList(boolean fullLoad) {
-        List<Student> studentList = (List) studentRepository.findAll();
-        if (fullLoad) {
-            for (Student student : studentList) {
-               int i =  student.getCourses().size();
-            }
-        }
 
-        return studentList;
+    public List<StudentWithCoursesCount> getStudentsList(boolean sortByCourseCount) {
+
+        List<Object[]> list =
+                sortByCourseCount?
+                        studentRepository.findAllandCoursesCountSortCount()
+                        :studentRepository.findAllandCoursesCountSortName();
+
+        List<StudentWithCoursesCount> resList= new ArrayList<>();
+
+        for (Object[] obj: list) {
+            resList.add(new StudentWithCoursesCount((Integer)obj[0],(String)obj[1],(BigInteger)obj[2]));
+
+        }
+        return resList;
     }
 
     @Transactional
@@ -47,6 +53,43 @@ public class StudentService {
         Optional<Student> student = studentRepository.findById(id);
         return student.isPresent() ? student.get().getCourses() : Collections.emptyList();
     }
+
+
+   public static class StudentWithCoursesCount{
+        private long id;
+        private String Name;
+        private long coursesCount;
+
+        public StudentWithCoursesCount(long id, String name, BigInteger coursesCount) {
+            this.id = id;
+            Name = name;
+            this.coursesCount=coursesCount.longValue();
+        }
+
+       public long getId() {
+           return id;
+       }
+
+       public void setId(long id) {
+           this.id = id;
+       }
+
+       public String getName() {
+           return Name;
+       }
+
+       public void setName(String name) {
+           Name = name;
+       }
+
+       public long getCoursesCount() {
+           return coursesCount;
+       }
+
+       public void setCoursesCount(long coursesCount) {
+           this.coursesCount = coursesCount;
+       }
+   }
 }
 
 
