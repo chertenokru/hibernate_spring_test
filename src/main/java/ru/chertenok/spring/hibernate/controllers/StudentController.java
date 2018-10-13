@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.chertenok.spring.hibernate.entity.Student;
+import ru.chertenok.spring.hibernate.interfaces.StudentWithCoursesCount;
+import ru.chertenok.spring.hibernate.repositories.StudentRepository;
 import ru.chertenok.spring.hibernate.services.StudentService;
 
 import java.util.List;
@@ -27,8 +29,7 @@ public class StudentController {
 
     @RequestMapping("/list")
     public String studentsList(Model model, @RequestParam(name = "sortCourse",required = false, defaultValue = "false") boolean sort ) {
-        List<StudentService.StudentWithCoursesCount> studentList = studentService.getStudentsList(sort);
-        //studentList.sort((student, t1) -> student.getCourses().size()>t1.getCourses().size()?-1:1);
+        List<StudentWithCoursesCount> studentList = studentService.getStudentsList(sort);
         model.addAttribute("studentList", studentList);
 
 

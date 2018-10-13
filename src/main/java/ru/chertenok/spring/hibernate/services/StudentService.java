@@ -2,9 +2,11 @@ package ru.chertenok.spring.hibernate.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.entity.Student;
+import ru.chertenok.spring.hibernate.interfaces.StudentWithCoursesCount;
 import ru.chertenok.spring.hibernate.repositories.StudentRepository;
 
 import javax.transaction.Transactional;
@@ -27,18 +29,11 @@ public class StudentService {
 
     public List<StudentWithCoursesCount> getStudentsList(boolean sortByCourseCount) {
 
-        List<Object[]> list =
+           List<StudentWithCoursesCount> list =
                 sortByCourseCount?
                         studentRepository.findAllandCoursesCountSortCount()
                         :studentRepository.findAllandCoursesCountSortName();
-
-        List<StudentWithCoursesCount> resList= new ArrayList<>();
-
-        for (Object[] obj: list) {
-            resList.add(new StudentWithCoursesCount((Integer)obj[0],(String)obj[1],(BigInteger)obj[2]));
-
-        }
-        return resList;
+        return list;
     }
 
     @Transactional
@@ -55,41 +50,7 @@ public class StudentService {
     }
 
 
-   public static class StudentWithCoursesCount{
-        private long id;
-        private String Name;
-        private long coursesCount;
 
-        public StudentWithCoursesCount(long id, String name, BigInteger coursesCount) {
-            this.id = id;
-            Name = name;
-            this.coursesCount=coursesCount.longValue();
-        }
-
-       public long getId() {
-           return id;
-       }
-
-       public void setId(long id) {
-           this.id = id;
-       }
-
-       public String getName() {
-           return Name;
-       }
-
-       public void setName(String name) {
-           Name = name;
-       }
-
-       public long getCoursesCount() {
-           return coursesCount;
-       }
-
-       public void setCoursesCount(long coursesCount) {
-           this.coursesCount = coursesCount;
-       }
-   }
 }
 
 

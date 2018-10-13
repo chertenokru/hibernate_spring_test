@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.chertenok.spring.hibernate.entity.Course;
+import ru.chertenok.spring.hibernate.interfaces.CoursesWithStudentCount;
 import ru.chertenok.spring.hibernate.services.CourseService;
 
 import java.util.List;
@@ -22,23 +23,21 @@ public class CourseController {
     }
 
     @RequestMapping("/detail/{id}")
-    public String getCourseDetail(Model model, @PathVariable int id){
+    public String getCourseDetail(Model model, @PathVariable int id) {
         Optional<Course> course = courseService.getCourseyID(id);
-        if (!course.isPresent()){
-            model.addAttribute("message","Курс с таким id  не существует");
+        if (!course.isPresent()) {
+            model.addAttribute("message", "Курс с таким id  не существует");
             return "page404";
         }
-        model.addAttribute("course",course.get());
+        model.addAttribute("course", course.get());
         return "course_detail";
     }
 
 
     @RequestMapping("/list")
-    public String courseList(Model model ) {
-        List<CourseService.CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount();
-        //studentList.sort((student, t1) -> student.getCourses().size()>t1.getCourses().size()?-1:1);
+    public String courseList(Model model) {
+        List<CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount();
         model.addAttribute("coursetList", courseList);
-
         return "course_list";
 
     }
