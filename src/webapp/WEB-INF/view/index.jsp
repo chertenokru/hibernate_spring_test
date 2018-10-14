@@ -20,6 +20,7 @@
             <li><a href="/student/list">Список студентов</a> </li>
             <li><a href="/student/list?sortCourse=true">Список студентов с сортировкой по числу курсов</a> </li>
             <li><a href="/course/list">Список курсов</a> </li>
+            <li><a href="/generate/">Сгенерировать новые данные</a> </li>
         </ul>
     </div>
 </div>

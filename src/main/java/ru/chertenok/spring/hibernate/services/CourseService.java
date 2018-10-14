@@ -33,4 +33,11 @@ public class CourseService {
     }
 
 
+    public void daleteAll() {
+        courseRepository.deleteAll();
+    }
+
+    public Course save(Course course) {
+        return courseRepository.save(course);
+    }
 }

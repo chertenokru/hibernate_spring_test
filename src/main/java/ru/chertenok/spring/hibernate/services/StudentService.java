@@ -1,6 +1,10 @@
 package ru.chertenok.spring.hibernate.services;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -50,7 +54,13 @@ public class StudentService {
     }
 
 
+    public void deleteAll() {
+        studentRepository.deleteAll();
+    }
 
+    public Student save(Student student) {
+        return studentRepository.save(student);
+    }
 }
 
 
