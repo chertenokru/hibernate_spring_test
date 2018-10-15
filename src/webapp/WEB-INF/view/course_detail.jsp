@@ -18,11 +18,11 @@
     <th>Id</th>
     <th>Имя</th>
     <th>Полная информация</th>
-    <c:forEach var="student" items="${course.students}">
+    <c:forEach var="course" items="${course.students}">
         <tr>
-            <td>${student.id}</td>
-            <td>${student.name}</td>
-            <td><a href="/student/detail/${student.id}">Полная информация</a></td>
+            <td>${course.id}</td>
+            <td>${course.name}</td>
+            <td><a href="/student/detail/${course.id}">Полная информация</a></td>
         </tr>
     </c:forEach>
 </table>

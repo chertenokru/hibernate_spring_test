@@ -9,6 +9,7 @@ import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.interfaces.CoursesWithStudentCount;
 import ru.chertenok.spring.hibernate.services.CourseService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("/course")
 public class CourseController {
     private CourseService courseService;
+
 
     @Autowired
     public void setCourseService(CourseService courseService) {
@@ -30,6 +32,7 @@ public class CourseController {
             return "page404";
         }
         model.addAttribute("course", course.get());
+        model.addAttribute("breadcrumb", new String[][]{{"Home","Информация о курсе"},{"/",""}});
         return "course_detail";
     }
 
@@ -37,7 +40,9 @@ public class CourseController {
     @RequestMapping("/list")
     public String courseList(Model model) {
         List<CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount();
-        model.addAttribute("coursetList", courseList);
+        model.addAttribute("courseList", courseList);
+        model.addAttribute("breadcrumb", new String[][]{{"Home","Список курсов"},{"/",""}});
+        System.out.println(Arrays.deepToString(new String[][]{{"Home","Список курсов"},{"/",""}}));
         return "course_list";
 
     }

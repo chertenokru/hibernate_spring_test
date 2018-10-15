@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+    <title>Список курсов</title>
+</head>
+<body>
+<h1>Список курсов</h1>
+
+
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Название</th>
+    <th scope="col">Кол-во занятий</th>
+    <th scope="col">Кол-во студентов</th>
+    <th scope="col"></th>
+</tr>
+</thead>
+
+
+
+        <tr th:each="course : ${courseList}">
+
+            <td th:text="${course.id}"/>
+            <td th:text ="${course.description}"/>
+            <td th:text="${course.length}"/>
+            <td th:text ="${course.studentCount}"/>
+    </tr>
+
+    </table>
+
+</body>
+</html>

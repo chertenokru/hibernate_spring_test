@@ -15,12 +15,12 @@
     <th>Кол-во курсов</th>
     <th></th>
 
-    <c:forEach var="student" items="${studentList}">
+    <c:forEach var="course" items="${studentList}">
         <tr>
-            <td>${student.id}</td>
-            <td>${student.name}</td>
-            <td>${student.coursesCount}</td>
-            <td><a href="/student/detail/${student.id}">Полная информация</a> </td>
+            <td>${course.id}</td>
+            <td>${course.name}</td>
+            <td>${course.coursesCount}</td>
+            <td><a href="/student/detail/${course.id}">Полная информация</a> </td>
         </tr>
     </c:forEach>
     </table>

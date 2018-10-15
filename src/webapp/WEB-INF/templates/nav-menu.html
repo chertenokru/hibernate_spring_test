@@ -1,0 +1,7 @@
+<nav aria-label="breadcrumb" th:fragment="nav">
+    <ol class="breadcrumb" >
+
+        <li th:each="s[] : ${breadcrumb}"    class="breadcrumb-item"><a href="#" th:href="${s[1]}" th:text="${s[0]}">Home</a></li>
+
+    </ol>
+</nav>

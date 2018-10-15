@@ -31,8 +31,7 @@ public class StudentController {
     public String studentsList(Model model, @RequestParam(name = "sortCourse",required = false, defaultValue = "false") boolean sort ) {
         List<StudentWithCoursesCount> studentList = studentService.getStudentsList(sort);
         model.addAttribute("studentList", studentList);
-
-
+        model.addAttribute("breadcrumb", new String[]{"Home","Список студентов"});
         return "student_list";
 
     }
@@ -47,7 +46,7 @@ public class StudentController {
         }
         model.addAttribute("student", student.get());
         // model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
-
+        model.addAttribute("breadcrumb", new String[]{"Home","Сведения о  студенте"});
         return "student_detail";
     }
 }
