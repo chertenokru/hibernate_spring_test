@@ -18,11 +18,28 @@
     </mvc:annotation-driven>
     
     <context:component-scan base-package="ru.chertenok.spring.hibernate" />
-    
+    <!-- jsp
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/" />
         <property name="suffix" value=".jsp" />
     </bean>
+    -->
+    <!-- thymeleaf -->
+    <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <property name="prefix" value="/WEB-INF/templates/"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+    <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+    <!-- thymeleaf -->
+
 
     <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
@@ -64,4 +81,5 @@
     <tx:annotation-driven/>
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**" />
 </beans>
