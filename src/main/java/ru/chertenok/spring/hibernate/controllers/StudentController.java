@@ -33,8 +33,9 @@ public class StudentController {
         model.addAttribute("studentList", studentList);
         model.addAttribute("breadcrumb", new String[][]{{"Home","/"},{"Список студентов",""}});
         return "student_list";
-
     }
+
+
 
     @RequestMapping(path = "/detail/{id}", method = RequestMethod.GET)
     public String studentDetailByID(Model model, @PathVariable int id) {
@@ -49,4 +50,20 @@ public class StudentController {
         model.addAttribute("breadcrumb", new String[][]{{"Home","/"},{"Список студентов","/student/list"},{"Сведения о  студенте",""}});
         return "student_detail";
     }
+
+    @RequestMapping(path = "/detail/{id}/edit", method = RequestMethod.GET)
+    public String studentDetailByIDEdit(Model model, @PathVariable int id) {
+
+        Optional<Student> student = studentService.getStudentByID(id);
+        if (!student.isPresent()) {
+            model.addAttribute("message", "Студент с таким ID не найден");
+            return "page404";
+        }
+        model.addAttribute("student", student.get());
+        // model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
+        model.addAttribute("breadcrumb", new String[][]{{"Home","/"},{"Список студентов","/student/list"},{"Сведения о  студенте",""}});
+        return "education";
+    }
+
+
 }
