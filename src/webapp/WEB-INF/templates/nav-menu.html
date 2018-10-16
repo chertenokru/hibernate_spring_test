@@ -1,7 +1,11 @@
 <nav aria-label="breadcrumb" th:fragment="nav">
     <ol class="breadcrumb" >
 
-        <li th:each="s[] : ${breadcrumb}"    class="breadcrumb-item"><a href="#" th:href="${s[1]}" th:text="${s[0]}">Home</a></li>
+        <li th:each="s,stat : ${breadcrumb}"   th:class="${stat.last}?'breadcrumb-item active':'breadcrumb-item'">
+            <a th:unless="${stat.last}" href="#" th:href="${s[1]}" th:text="${s[0]}">Home</a>
+            <span th:if="${stat.last}" th:text="${s[0]}"/>
+
+        </li>
 
     </ol>
 </nav>
