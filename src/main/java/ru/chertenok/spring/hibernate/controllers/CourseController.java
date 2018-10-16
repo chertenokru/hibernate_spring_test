@@ -32,7 +32,7 @@ public class CourseController {
             return "page404";
         }
         model.addAttribute("course", course.get());
-        model.addAttribute("breadcrumb", new String[][]{{"Home","Информация о курсе"},{"/",""}});
+        model.addAttribute("breadcrumb", new String[][]{{"Home","/"},{"Список курсов","/course/list"},{"Информация о курсе",""}});
         return "course_detail";
     }
 
@@ -41,8 +41,8 @@ public class CourseController {
     public String courseList(Model model) {
         List<CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount();
         model.addAttribute("courseList", courseList);
-        model.addAttribute("breadcrumb", new String[][]{{"Home","Список курсов"},{"/",""}});
-        System.out.println(Arrays.deepToString(new String[][]{{"Home","Список курсов"},{"/",""}}));
+        model.addAttribute("breadcrumb", new String[][]{{"Home","/"},{"Список курсов",""}});
+
         return "course_list";
 
     }

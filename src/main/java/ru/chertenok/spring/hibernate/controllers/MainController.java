@@ -19,8 +19,9 @@ public class MainController {
 
     @RequestMapping("/")
     public String index(Model model){
-        model.addAttribute("breadcrumb", new String[]{"Home"});
-     return "index";
+        model.addAttribute("breadcrumb", new String[][]{{"Home","/"}});
+
+        return "index";
     }
 
     @RequestMapping("/generate")
