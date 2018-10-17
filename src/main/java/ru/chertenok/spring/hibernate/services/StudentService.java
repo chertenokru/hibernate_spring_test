@@ -49,10 +49,15 @@ public class StudentService {
 
     @Transactional
     public List<Course> getCoursesByStudentID(int id) {
-        Optional<Student> student = studentRepository.findById(id);
+        Optional<Student> student = getStudentByID(id);
+        if (student.isPresent()) student.get().getCourses().size();
         return student.isPresent() ? student.get().getCourses() : Collections.emptyList();
     }
 
+    @Transactional
+    public List<Course> getCoursesNotInStudentID(int id) {
+        return studentRepository.getCourseListNotInStudent(id);
+    }
 
     public void deleteAll() {
         studentRepository.deleteAll();

@@ -14,7 +14,10 @@
 <body>
 <h1 th:text="'Информация о студенте '+${student.name}">Информация о студенте ${student.name}</h1>
 
-<p th:text="'Студент обучается на '+${student.courses.size()} +' курсах:'">Студент обучается на 5 курсах:</p>
+<p th:text="'Студент обучается на '+${student.courses.size()} +' курсах:'">Студент обучается на 5 курсах (
+    <a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'edit'" >Редактировать</a>
+    ):</p>
+
 <table class="table table-bordered table-striped" >
     <thead class="thead-dark">
     <tr>

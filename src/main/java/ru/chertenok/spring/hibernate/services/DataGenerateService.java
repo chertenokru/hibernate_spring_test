@@ -53,7 +53,12 @@ public class DataGenerateService {
 
 
             for (int j = 0; j < (random.nextInt(courseList.size()-1) + 1); j++) {
-                student.getCourses().add(courseList.get(random.nextInt(courseList.size())));
+                Course course;
+                do
+                  course = courseList.get(random.nextInt(courseList.size()));
+                while (student.getCourses().contains(course));
+
+                student.getCourses().add(course);
             }
             studentService.save(student);
         }
