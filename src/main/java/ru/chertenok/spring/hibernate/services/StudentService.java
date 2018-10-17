@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.entity.Student;
 import ru.chertenok.spring.hibernate.interfaces.StudentWithCoursesCount;
+import ru.chertenok.spring.hibernate.repositories.CourseRepository;
 import ru.chertenok.spring.hibernate.repositories.StudentRepository;
 
 import javax.transaction.Transactional;
@@ -23,13 +24,17 @@ import java.util.Optional;
 @Service
 public class StudentService {
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
 
     @Autowired
     public void setStudentRepository(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
-
+    @Autowired
+    public void setCourseRepository(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
 
     public List<StudentWithCoursesCount> getStudentsList(boolean sortByCourseCount) {
 
@@ -65,6 +70,38 @@ public class StudentService {
 
     public Student save(Student student) {
         return studentRepository.save(student);
+    }
+
+    @Transactional
+    public Optional<Student> deleteCourseByID(int id_s, int id_c) {
+        Optional<Student> student = studentRepository.findById(id_s);
+        if (student.isPresent()) {
+            for (Course course :student.get().getCourses()) {
+                if (course.getId() == id_c){
+                    student.get().getCourses().remove(course);
+                    break;
+                }
+            }
+
+            studentRepository.save(student.get());
+        }
+        return student;
+    }
+
+    @Transactional
+    public Optional<Student> addCourseByID(int id_s, int id_c) {
+        Optional<Student> student_o = studentRepository.findById(id_s);
+        if (student_o.isPresent()) {
+            Student student = student_o.get();
+            Optional<Course> course_o = courseRepository.findById(id_c);
+            if (course_o.isPresent()) {
+                Course course = course_o.get();
+                if (!student.getCourses().contains(course))
+                student.getCourses().add(course);
+                studentRepository.save(student);
+            }
+        }
+        return student_o;
     }
 }
 

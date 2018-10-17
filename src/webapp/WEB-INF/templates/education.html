@@ -47,7 +47,7 @@
                     <p th:utext="'Курс: '+${course.description}+'<br>ID: '+${course.id}+'<br>Занятий: '+${course.courseLength}">
                         Курс: xxxxx  <br> ID: xxxxx <br>Занятий: 5</p>
 
-                    <a class="btn btn-danger" th:href="'/students/remove/' + ${student.id}+'/course/'+${course.id}" role="button">Удалить курс</a>
+                    <a class="btn btn-danger" th:href="'/student/' + ${student.id}+'/remove_course/'+${course.id}" role="button">Удалить курс</a>
 
                 </div>
                 <div th:each="course: ${courseListNew}" class="tab-pane fade" th:id="'list-'+${course.id}" role="tabpanel"
@@ -56,12 +56,15 @@
                     <p th:utext="'Курс: '+${course.description}+'<br>ID: '+${course.id}+'<br>Занятий: '+${course.courseLength}">
                     Курс: xxxxx  <br> ID: xxxxx <br>Занятий: 5</p>
 
-                    <a class="btn btn-primary" th:href="'/students/add/' + ${student.id}+'/course/'+${course.id}" role="button">Добавить курс</a>
+                    <a class="btn btn-primary" th:href="'/student/' + ${student.id}+'/add_course/'+${course.id}" role="button">Добавить курс</a>
 
                 </div>
         </div>
     </div>
 
+    </div>
+
+<div th:insert="~{nav-menu :: nav}"></div>
 
 </body>
 </html>

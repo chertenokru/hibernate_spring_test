@@ -51,8 +51,8 @@ public class StudentController {
     }
 
     @RequestMapping(path = "/detail/{id}/edit", method = RequestMethod.GET)
-    public String studentDetailByIDEdit(Model model, @PathVariable int id,
-                                        @RequestParam(required = false, name = "student") Student student_save)  {
+    public String studentDetailByIDEdit(Model model, @PathVariable int id)
+                                          {
 
         Optional<Student> student = studentService.getStudentByID(id);
         if (!student.isPresent()) {
@@ -62,7 +62,45 @@ public class StudentController {
         model.addAttribute("student", student.get());
         model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
         model.addAttribute("courseListNew",studentService.getCoursesNotInStudentID(id));
-        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"}, {"Сведения о  студенте", ""}});
+        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
+                {"Сведения о  студенте", "/student/detail/"+id},{"Редактирование курсов студента", ""}});
+        return "education";
+    }
+
+
+    @RequestMapping(path = "/{id_s}/add_course/{id_c}", method = RequestMethod.GET)
+    public String studentAddCourseByID(Model model, @PathVariable int id_s,@PathVariable int id_c)   {
+
+        Optional<Student> student = studentService.addCourseByID(id_s,id_c);
+
+        if (!student.isPresent()) {
+            model.addAttribute("message", "Студент с таким ID не найден");
+            return "page404";
+        }
+
+        model.addAttribute("student", student.get());
+        model.addAttribute("courseList",studentService.getCoursesByStudentID(id_s));
+        model.addAttribute("courseListNew",studentService.getCoursesNotInStudentID(id_s));
+        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
+                {"Сведения о  студенте", "/student/detail/"+id_s},{"Редактирование курсов студента", ""}});
+        return "education";
+    }
+
+    @RequestMapping(path = "/{id_s}/remove_course/{id_c}", method = RequestMethod.GET)
+    public String studentRemoveCourseByID(Model model, @PathVariable int id_s,@PathVariable int id_c)   {
+
+        Optional<Student> student = studentService.deleteCourseByID(id_s,id_c);
+
+        if (!student.isPresent()) {
+            model.addAttribute("message", "Студент с таким ID не найден");
+            return "page404";
+        }
+
+        model.addAttribute("student", student.get());
+        model.addAttribute("courseList",studentService.getCoursesByStudentID(id_s));
+        model.addAttribute("courseListNew",studentService.getCoursesNotInStudentID(id_s));
+        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
+                {"Сведения о  студенте", "/student/detail/"+id_s},{"Редактирование курсов студента", ""}});
         return "education";
     }
 

@@ -14,9 +14,10 @@
 <body>
 <h1 th:text="'Информация о студенте '+${student.name}">Информация о студенте ${student.name}</h1>
 
-<p th:text="'Студент обучается на '+${student.courses.size()} +' курсах:'">Студент обучается на 5 курсах (
-    <a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'edit'" >Редактировать</a>
-    ):</p>
+<p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
+
+    <a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'/edit'" >Редактировать</a>
+
 
 <table class="table table-bordered table-striped" >
     <thead class="thead-dark">
@@ -31,7 +32,7 @@
         <td th:text="${course.id}"/>
         <td th:text="${course.description}"/>
         <td th:text="${course.courseLength}"/>
-        <td><a th:href="'/course/detail/'+${course.id}">Полная информация</a></td>
+        <td><a th:href="'/course/detail/'+${course.id}">Информация о курсе</a></td>
     </tr>
 
 </table>
