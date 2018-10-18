@@ -29,6 +29,9 @@ public class CourseController {
         Optional<Course> course = courseService.getCourseyID(id);
         if (!course.isPresent()) {
             model.addAttribute("message", "Курс с таким id  не существует");
+            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список курсов", "/course/list"},
+                    {"Курс не найден", ""}});
+
             return "page404";
         }
         model.addAttribute("course", course.get());

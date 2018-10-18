@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb" th:fragment="nav">
+<nav class="nav-menu" aria-label="breadcrumb" th:fragment="nav">
     <ol class="breadcrumb" >
 
         <li th:each="s,stat : ${breadcrumb}"   th:class="${stat.last}?'breadcrumb-item active':'breadcrumb-item'">

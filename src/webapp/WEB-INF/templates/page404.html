@@ -13,8 +13,8 @@
 </head>
 <body>
 <h1 th:text="${message}"> Страница не найдена</h1>
-<p>
-<a href="/"> Вернуться на главную </a>
-</p>
+
+<div th:insert="~{nav-menu :: nav}"></div>
+
 </body>
 </html>

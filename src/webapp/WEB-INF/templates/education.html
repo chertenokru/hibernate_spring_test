@@ -21,7 +21,7 @@
         <div class="col-4  my-tab"  id="list-tab" role="tablist">
             <div class="list-group"  >
 
-            <h2 class="badge badge-primary"> Записан на курсы </h2>
+            <h2 class="badge badge-primary text-light text20"> Записан на курсы </h2>
 
                 <a th:each="course : ${courseList}" class="list-group-item list-group-item-action"
                    th:id="'list-'+${course.id}+'-list'" data-toggle="list" th:href="'#list-'+${course.id}" role="tab"
@@ -29,7 +29,7 @@
 
 
 
-            <h2 class="badge badge-success"> Можно записать на курсы </h2>
+            <h2 class="badge badge-success text-light text20"> Можно записать на курсы </h2>
 
                 <a th:each="course : ${courseListNew}" class="list-group-item list-group-item-action"
                    th:id="'list-'+${course.id}+'-list'" data-toggle="list" th:href="'#list-'+${course.id}" role="tab"

@@ -42,6 +42,9 @@ public class StudentController {
         Optional<Student> student = studentService.getStudentByID(id);
         if (!student.isPresent()) {
             model.addAttribute("message", "Студент с таким ID не найден");
+            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
+                    {"Студент не найден", ""}});
+
             return "page404";
         }
         model.addAttribute("student", student.get());
@@ -57,6 +60,8 @@ public class StudentController {
         Optional<Student> student = studentService.getStudentByID(id);
         if (!student.isPresent()) {
             model.addAttribute("message", "Студент с таким ID не найден");
+            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
+                    {"Студент не найден", ""}});
             return "page404";
         }
         model.addAttribute("student", student.get());
@@ -75,6 +80,9 @@ public class StudentController {
 
         if (!student.isPresent()) {
             model.addAttribute("message", "Студент с таким ID не найден");
+            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
+                    {"Сведения о  студенте", "/student/detail/"+id_s},{"Студент не найден", ""}});
+
             return "page404";
         }
 
@@ -93,6 +101,9 @@ public class StudentController {
 
         if (!student.isPresent()) {
             model.addAttribute("message", "Студент с таким ID не найден");
+            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
+                    {"Сведения о  студенте", "/student/detail/"+id_s},{"Студент не найден", ""}});
+
             return "page404";
         }
 

@@ -12,10 +12,13 @@
     <title >Main</title>
 </head>
 <body>
-<div>
+    <div class="header page-header">
     <h1>Меню</h1>
+    </div>
+<div class="content">
+    <div th:if="${!mainMessage.isEmpty()}" class="alert alert-success" role="alert" th:text="${mainMessage}">
 
-
+    </div>
     <div class="btn-group-vertical">
         <ul>
             <li><a href="/student/list">Список студентов</a> </li>
@@ -25,6 +28,9 @@
         </ul>
     </div>
 </div>
+<footer>
+<div th:insert="~{nav-menu :: nav}"></div>
+</footer>
 </body>
 
 </body>

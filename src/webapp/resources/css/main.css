@@ -8,3 +8,14 @@ body {
 .my-tab{
     display:flex; justify-content: space-between;
 }
+
+.text20{
+    font-size: 20px;
+    margin-top: 20px;
+}
+.nav-menu{
+    margin: 20px 0px;
+}
+.header{
+    margin: 20px 0px;
+}

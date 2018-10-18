@@ -35,6 +35,9 @@
             <td th:text ="${course.description}"/>
             <td th:text="${course.length}"/>
             <td th:text ="${course.studentCount}"/>
+            <td> <a href="/course/list/" th:href="'/course/detail/'+${course.id}"
+                    th:text ="'Информация о курсе '"></a>
+            </td>
     </tr>
 
     </table>

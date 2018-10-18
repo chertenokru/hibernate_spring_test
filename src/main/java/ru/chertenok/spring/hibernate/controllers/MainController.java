@@ -19,14 +19,17 @@ public class MainController {
 
     @RequestMapping("/")
     public String index(Model model){
+        model.addAttribute("mainMessage","");
         model.addAttribute("breadcrumb", new String[][]{{"Home","/"}});
 
         return "index";
     }
 
     @RequestMapping("/generate")
-    public String generateData(){
+    public String generateData(Model model){
         dataGenerateService.generateData();
+        model.addAttribute("mainMessage","Данные сгенерированы");
+        model.addAttribute("breadcrumb", new String[][]{{"Home","/"}});
         return "index";
     }
 }
