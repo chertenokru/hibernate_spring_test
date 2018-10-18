@@ -8,15 +8,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.interfaces.CoursesWithStudentCount;
 import ru.chertenok.spring.hibernate.services.CourseService;
+import ru.chertenok.spring.hibernate.util.Config;
+import ru.chertenok.spring.hibernate.util.PageInfo;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static ru.chertenok.spring.hibernate.util.Config.*;
+import static ru.chertenok.spring.hibernate.util.Config.BREADCRUMB;
+import static ru.chertenok.spring.hibernate.util.Config.MESSAGE404;
+import static ru.chertenok.spring.hibernate.util.Config.PAGE_MAP;
 
 @Controller
 @RequestMapping("/course")
 public class CourseController {
     private CourseService courseService;
+    {
+       PAGE_MAP.put(PagesName.courseList, new PageInfo("/course/list","Список курсов","course_list"));
+       PAGE_MAP.put(PagesName.courseDetail, new PageInfo("/course/detail/{id}","Информация о курсе","course_detail"));
+    }
 
 
     @Autowired
@@ -28,15 +38,14 @@ public class CourseController {
     public String getCourseDetail(Model model, @PathVariable int id) {
         Optional<Course> course = courseService.getCourseyID(id);
         if (!course.isPresent()) {
-            model.addAttribute("message", "Курс с таким id  не существует");
-            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список курсов", "/course/list"},
-                    {"Курс не найден", ""}});
+            model.addAttribute(MESSAGE404, "Курс с таким id  не существует");
+            model.addAttribute(BREADCRUMB, new PageInfo[] {PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.courseList),PAGE_MAP.get(PagesName.page404)});
 
-            return "page404";
+            return PAGE_MAP.get(PagesName.page404).getSHABLON();
         }
         model.addAttribute("course", course.get());
-        model.addAttribute("breadcrumb", new String[][]{{"Home","/"},{"Список курсов","/course/list"},{"Информация о курсе",""}});
-        return "course_detail";
+        model.addAttribute(BREADCRUMB,new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.courseList),PAGE_MAP.get(PagesName.courseDetail)});
+        return PAGE_MAP.get(PagesName.courseDetail).getSHABLON();
     }
 
 
@@ -44,9 +53,9 @@ public class CourseController {
     public String courseList(Model model) {
         List<CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount();
         model.addAttribute("courseList", courseList);
-        model.addAttribute("breadcrumb", new String[][]{{"Home","/"},{"Список курсов",""}});
+        model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.courseList)});
 
-        return "course_list";
+        return PAGE_MAP.get(PagesName.courseList).getSHABLON();
 
     }
 

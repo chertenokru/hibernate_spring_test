@@ -1,9 +1,10 @@
-<nav class="nav-menu" aria-label="breadcrumb" th:fragment="nav">
+<nav class="nav-menu" aria-label="breadcrumb" th:fragment="nav" xmlns:th="http://www.thymeleaf.org">
     <ol class="breadcrumb" >
 
-        <li th:each="s,stat : ${breadcrumb}"   th:class="${stat.last}?'breadcrumb-item active':'breadcrumb-item'">
-            <a th:unless="${stat.last}" href="#" th:href="${s[1]}" th:text="${s[0]}">Home</a>
-            <span th:if="${stat.last}" th:text="${s[0]}"/>
+
+        <li th:each="page,stat : ${breadcrumb}"   th:class="${stat.last}?'breadcrumb-item active':'breadcrumb-item'">
+            <a th:unless="${stat.last}" href="#" th:href="${page.getURL()}" th:text="${page.getTITLE()}">Home</a>
+            <span th:if="${stat.last}" th:text="${page.getTITLE()}"/>
 
         </li>
 

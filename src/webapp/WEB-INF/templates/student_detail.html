@@ -15,11 +15,11 @@
 
 <div th:with="title='Информация о студенте '+${student.name}" th:insert="~{header :: header}"></div>
 
-<a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'/edit'" >Редактировать</a>
+<a href="/student/" th:href="'/student/'+${student.id}+'/edit'" >Редактировать</a>
 
 <p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
 
-    <a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'/edit_course'" >Редактировать список курсов</a>
+    <a href="/student/" th:href="'/student/'+${student.id}+'/edit_course'" >Редактировать список курсов</a>
 
 
 <table class="table table-bordered table-striped" >

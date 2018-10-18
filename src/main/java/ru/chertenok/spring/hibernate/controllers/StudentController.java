@@ -9,16 +9,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.chertenok.spring.hibernate.entity.Student;
 import ru.chertenok.spring.hibernate.interfaces.StudentWithCoursesCount;
-import ru.chertenok.spring.hibernate.services.CourseService;
 import ru.chertenok.spring.hibernate.services.StudentService;
+import ru.chertenok.spring.hibernate.util.PageInfo;
 
 import java.util.List;
 import java.util.Optional;
+
+import static ru.chertenok.spring.hibernate.util.Config.*;
 
 @Controller
 @RequestMapping("/student")
 public class StudentController {
     private StudentService studentService;
+
+    {
+        PAGE_MAP.put(PagesName.studentlist, new PageInfo("/student/list", "Список студентов", "student_list"));
+        PAGE_MAP.put(PagesName.studentDetail, new PageInfo("/student/detail/{id}", "Информация о студенте", "student_detail"));
+        PAGE_MAP.put(PagesName.studentCourseEdit, new PageInfo("/student/{id}/edit_course", "Редактирование курсов студента", "education"));
+    }
 
 
     @Autowired
@@ -26,94 +34,107 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-
-    @RequestMapping("/list")
+    @RequestMapping(value = "/list")
     public String studentsList(Model model, @RequestParam(name = "sortCourse", required = false, defaultValue = "false") boolean sort) {
         List<StudentWithCoursesCount> studentList = studentService.getStudentsList(sort);
         model.addAttribute("studentList", studentList);
-        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", ""}});
-        return "student_list";
+        model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist)});
+        return PAGE_MAP.get(PagesName.studentlist).getSHABLON();
     }
-
 
     @RequestMapping(path = "/detail/{id}", method = RequestMethod.GET)
     public String studentDetailByID(Model model, @PathVariable int id) {
 
         Optional<Student> student = studentService.getStudentByID(id);
         if (!student.isPresent()) {
+            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
+            model.addAttribute(BREADCRUMB,
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+
+            return PAGE_MAP.get(PagesName.page404).getSHABLON();
+        }
+        model.addAttribute("student", student.get());
+        // model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
+        model.addAttribute(BREADCRUMB,
+                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentDetail)});
+        return PAGE_MAP.get(PagesName.studentDetail).getSHABLON();
+    }
+
+    @RequestMapping(path = "/{id}/edit_course", method = RequestMethod.GET)
+    public String studentDetailByIDEdit(Model model, @PathVariable int id) {
+
+        Optional<Student> student = studentService.getStudentByID(id);
+        if (!student.isPresent()) {
+            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
+            model.addAttribute(BREADCRUMB,
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+            return PAGE_MAP.get(PagesName.page404).getSHABLON();
+        }
+        model.addAttribute("student", student.get());
+        model.addAttribute("courseList", studentService.getCoursesByStudentID(id));
+        model.addAttribute("courseListNew", studentService.getCoursesNotInStudentID(id));
+        model.addAttribute(BREADCRUMB,
+                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentCourseEdit)});
+
+        return PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON();
+    }
+
+    @RequestMapping(path = "/{id_s}/add_course/{id_c}", method = RequestMethod.GET)
+    public String studentAddCourseByID(Model model, @PathVariable int id_s, @PathVariable int id_c) {
+
+        Optional<Student> student = studentService.addCourseByID(id_s, id_c);
+
+        if (!student.isPresent()) {
+            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
+            model.addAttribute(BREADCRUMB,
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+            return PAGE_MAP.get(PagesName.page404).getSHABLON();
+        }
+
+        model.addAttribute("student", student.get());
+        model.addAttribute("courseList", studentService.getCoursesByStudentID(id_s));
+        model.addAttribute("courseListNew", studentService.getCoursesNotInStudentID(id_s));
+        model.addAttribute(BREADCRUMB,
+                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentCourseEdit)});
+        return PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON();
+    }
+
+    @RequestMapping(path = "/{id_s}/remove_course/{id_c}", method = RequestMethod.GET)
+    public String studentRemoveCourseByID(Model model, @PathVariable int id_s, @PathVariable int id_c) {
+
+        Optional<Student> student = studentService.deleteCourseByID(id_s, id_c);
+
+        if (!student.isPresent()) {
+            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
+            model.addAttribute(BREADCRUMB,
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+            return PAGE_MAP.get(PagesName.page404).getSHABLON();
+        }
+
+        model.addAttribute("student", student.get());
+        model.addAttribute("courseList", studentService.getCoursesByStudentID(id_s));
+        model.addAttribute("courseListNew", studentService.getCoursesNotInStudentID(id_s));
+        model.addAttribute(BREADCRUMB,
+                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentCourseEdit)});
+        return PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON();
+    }
+
+ /*   @RequestMapping(path = "/{id}/edit", method = RequestMethod.GET)
+    public String studentEditByID(Model model, @PathVariable int id, @RequestParam(name = "student", required = false) Student student) {
+
+        Optional<Student> student_o = studentService.getStudentByID(id);
+        if (!student_o.isPresent()) {
             model.addAttribute("message", "Студент с таким ID не найден");
             model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
                     {"Студент не найден", ""}});
 
             return "page404";
         }
-        model.addAttribute("student", student.get());
+        model.addAttribute("student", student_o.get());
         // model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
         model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"}, {"Сведения о  студенте", ""}});
         return "student_detail";
     }
-
-    @RequestMapping(path = "/detail/{id}/edit_course", method = RequestMethod.GET)
-    public String studentDetailByIDEdit(Model model, @PathVariable int id)
-                                          {
-
-        Optional<Student> student = studentService.getStudentByID(id);
-        if (!student.isPresent()) {
-            model.addAttribute("message", "Студент с таким ID не найден");
-            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
-                    {"Студент не найден", ""}});
-            return "page404";
-        }
-        model.addAttribute("student", student.get());
-        model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
-        model.addAttribute("courseListNew",studentService.getCoursesNotInStudentID(id));
-        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
-                {"Сведения о  студенте", "/student/detail/"+id},{"Редактирование курсов студента", ""}});
-        return "education";
-    }
-
-
-    @RequestMapping(path = "/{id_s}/add_course/{id_c}", method = RequestMethod.GET)
-    public String studentAddCourseByID(Model model, @PathVariable int id_s,@PathVariable int id_c)   {
-
-        Optional<Student> student = studentService.addCourseByID(id_s,id_c);
-
-        if (!student.isPresent()) {
-            model.addAttribute("message", "Студент с таким ID не найден");
-            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
-                    {"Сведения о  студенте", "/student/detail/"+id_s},{"Студент не найден", ""}});
-
-            return "page404";
-        }
-
-        model.addAttribute("student", student.get());
-        model.addAttribute("courseList",studentService.getCoursesByStudentID(id_s));
-        model.addAttribute("courseListNew",studentService.getCoursesNotInStudentID(id_s));
-        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
-                {"Сведения о  студенте", "/student/detail/"+id_s},{"Редактирование курсов студента", ""}});
-        return "education";
-    }
-
-    @RequestMapping(path = "/{id_s}/remove_course/{id_c}", method = RequestMethod.GET)
-    public String studentRemoveCourseByID(Model model, @PathVariable int id_s,@PathVariable int id_c)   {
-
-        Optional<Student> student = studentService.deleteCourseByID(id_s,id_c);
-
-        if (!student.isPresent()) {
-            model.addAttribute("message", "Студент с таким ID не найден");
-            model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
-                    {"Сведения о  студенте", "/student/detail/"+id_s},{"Студент не найден", ""}});
-
-            return "page404";
-        }
-
-        model.addAttribute("student", student.get());
-        model.addAttribute("courseList",studentService.getCoursesByStudentID(id_s));
-        model.addAttribute("courseListNew",studentService.getCoursesNotInStudentID(id_s));
-        model.addAttribute("breadcrumb", new String[][]{{"Home", "/"}, {"Список студентов", "/student/list"},
-                {"Сведения о  студенте", "/student/detail/"+id_s},{"Редактирование курсов студента", ""}});
-        return "education";
-    }
-
+    */
 
 }
