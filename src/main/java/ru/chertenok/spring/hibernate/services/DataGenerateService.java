@@ -37,6 +37,7 @@ public class DataGenerateService {
 
         List<Course> courseList = new ArrayList<>();
         for (int i = 0; i < random.nextInt(17)+3; i++) {
+        //for (int i = 0; i < 500000; i++) {
             Course course = new Course();
             course.setDescription(COURSE_NAME+i);
             course.setCourseLength(random.nextInt(3) + 3);
@@ -45,6 +46,7 @@ public class DataGenerateService {
         }
 
         for (int i = 0; i < random.nextInt(17)+3; i++) {
+        //for (int i = 0; i < 50; i++) {
             Student student = new Student();
             student.setName(STUDENT_NAME+i);
 
@@ -53,6 +55,7 @@ public class DataGenerateService {
 
 
             for (int j = 0; j < (random.nextInt(courseList.size()-1) + 1); j++) {
+            //for (int j = 0; j < 100; j++){
                 Course course;
                 do
                   course = courseList.get(random.nextInt(courseList.size()));
