@@ -14,7 +14,9 @@
     <title>Редактирование списка курсов</title>
 </head>
 <body>
-<h1 th:text="'Редактирование курсов студента '+${student.name}">Редактирование курсов студента</h1>
+
+<div th:with="title='Редактирование курсов студента '+${student.name}" th:insert="~{header :: header}"></div>
+
 
     <div class="row">
 
@@ -64,7 +66,7 @@
 
     </div>
 
-<div th:insert="~{nav-menu :: nav}"></div>
+<div th:insert="~{footer :: footer}"></div>
 
 </body>
 </html>

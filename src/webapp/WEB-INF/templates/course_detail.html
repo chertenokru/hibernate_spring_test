@@ -15,8 +15,7 @@
 </head>
 <body>
 <!--/*@thymesVar id="course" type="ru.chertenok.spring.hibernate.entity.Course"*/-->
-<h1 th:text="'Информация о курсе '+${course.description}"/></h1>
-
+<div th:with="title='Информация о курсе '+${course.description}" th:insert="~{header :: header}"></div>
 На курсе обучаются студенты :
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
@@ -33,6 +32,6 @@
         </tr>
 
 </table>
-<div th:insert="~{nav-menu :: nav}"></div>
+<div th:insert="~{footer :: footer}"></div>
 </body>
 </html>

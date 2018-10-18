@@ -12,7 +12,8 @@
     <title>Список курсов</title>
 </head>
 <body>
-<h1>Список курсов</h1>
+
+<div th:with="title='Список курсов '" th:insert="~{header :: header}"></div>
 
 
 
@@ -41,6 +42,6 @@
     </tr>
 
     </table>
-<div th:insert="~{nav-menu :: nav}"></div>
+<div th:insert="~{footer :: footer}"></div>
 </body>
 </html>

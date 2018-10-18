@@ -12,11 +12,14 @@
     <title th:text="'Информация о студенте - '+${student.name}">информация о студенте - ${student.name}</title>
 </head>
 <body>
-<h1 th:text="'Информация о студенте '+${student.name}">Информация о студенте ${student.name}</h1>
+
+<div th:with="title='Информация о студенте '+${student.name}" th:insert="~{header :: header}"></div>
+
+<a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'/edit'" >Редактировать</a>
 
 <p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
 
-    <a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'/edit'" >Редактировать</a>
+    <a href="/student/detail/" th:href="'/student/detail/'+${student.id}+'/edit_course'" >Редактировать список курсов</a>
 
 
 <table class="table table-bordered table-striped" >
@@ -36,6 +39,6 @@
     </tr>
 
 </table>
-<div th:insert="~{nav-menu :: nav}"></div>
+<div th:insert="~{footer :: footer}"></div>
 </body>
 </html>

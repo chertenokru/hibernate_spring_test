@@ -12,10 +12,10 @@
     <title >Main</title>
 </head>
 <body>
-    <div class="header page-header">
-    <h1>Меню</h1>
-    </div>
-<div class="content">
+
+<div th:with="title='Меню'" th:insert="~{header :: header}"></div>
+
+<div class="container">
     <div th:if="${!mainMessage.isEmpty()}" class="alert alert-success" role="alert" th:text="${mainMessage}">
 
     </div>
@@ -28,9 +28,9 @@
         </ul>
     </div>
 </div>
-<footer>
-<div th:insert="~{nav-menu :: nav}"></div>
-</footer>
+
+<div th:insert="~{footer :: footer}"></div>
+
 </body>
 
 </body>

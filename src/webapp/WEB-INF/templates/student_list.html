@@ -12,7 +12,7 @@
     <title>Список студентов</title>
 </head>
 <body>
-<h1>Список студентов</h1>
+<div th:with="title='Список студентов'" th:insert="~{header :: header}"></div>
 
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
@@ -31,6 +31,6 @@
     </tr>
     </table>
 
-<div th:insert="~{nav-menu :: nav}"></div>
+<div th:insert="~{footer :: footer}"></div>
 </body>
 </html>

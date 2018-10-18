@@ -12,9 +12,10 @@
     <title th:text="${message}">${message}</title>
 </head>
 <body>
-<h1 th:text="${message}"> Страница не найдена</h1>
+<div th:with="title=${message}" th:insert="~{header :: header}"></div>
 
-<div th:insert="~{nav-menu :: nav}"></div>
+
+<div th:insert="~{footer :: footer}"></div>
 
 </body>
 </html>

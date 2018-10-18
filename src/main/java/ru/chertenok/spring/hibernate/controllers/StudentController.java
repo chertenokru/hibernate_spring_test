@@ -53,7 +53,7 @@ public class StudentController {
         return "student_detail";
     }
 
-    @RequestMapping(path = "/detail/{id}/edit", method = RequestMethod.GET)
+    @RequestMapping(path = "/detail/{id}/edit_course", method = RequestMethod.GET)
     public String studentDetailByIDEdit(Model model, @PathVariable int id)
                                           {
 
