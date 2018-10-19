@@ -25,7 +25,7 @@ public class CourseController {
     private CourseService courseService;
     {
        PAGE_MAP.put(PagesName.courseList, new PageInfo("/course/list","Список курсов","course_list"));
-       PAGE_MAP.put(PagesName.courseDetail, new PageInfo("/course/detail/{id}","Информация о курсе","course_detail"));
+       PAGE_MAP.put(PagesName.courseDetail, new PageInfo("/course/detail/{id}","Информация о курсе","course_detail",true));
     }
 
 
@@ -40,10 +40,11 @@ public class CourseController {
         if (!course.isPresent()) {
             model.addAttribute(MESSAGE404, "Курс с таким id  не существует");
             model.addAttribute(BREADCRUMB, new PageInfo[] {PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.courseList),PAGE_MAP.get(PagesName.page404)});
-
             return PAGE_MAP.get(PagesName.page404).getSHABLON();
         }
         model.addAttribute("course", course.get());
+        model.addAttribute("studentDetailPage", PAGE_MAP.get(PagesName.studentDetail));
+
         model.addAttribute(BREADCRUMB,new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.courseList),PAGE_MAP.get(PagesName.courseDetail)});
         return PAGE_MAP.get(PagesName.courseDetail).getSHABLON();
     }
@@ -53,6 +54,8 @@ public class CourseController {
     public String courseList(Model model) {
         List<CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount();
         model.addAttribute("courseList", courseList);
+
+        model.addAttribute("coursePage", PAGE_MAP.get(PagesName.courseDetail));
         model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.courseList)});
 
         return PAGE_MAP.get(PagesName.courseList).getSHABLON();

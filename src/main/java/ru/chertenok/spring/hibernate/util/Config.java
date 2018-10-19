@@ -9,5 +9,6 @@ public  class Config {
     final public static String BREADCRUMB = "breadcrumb";
     final public static String MESSAGE404 = "message";
 
-    public enum PagesName {home, page404, studentlist, studentDetail, studentCourseEdit,courseList,courseDetail}
+    public enum PagesName {home, page404, studentlist, studentDetail, studentCourseEdit,courseList,courseDetail,
+        studentCourseEditAdd,studentCourseEditRemove}
 }

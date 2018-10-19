@@ -9,10 +9,10 @@
     <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
-    <title>Список студентов</title>
+
 </head>
 <body>
-<div th:with="title='Список студентов'" th:insert="~{header :: header}"></div>
+<div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}" th:insert="~{header :: header}"></div>
 
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
@@ -23,11 +23,11 @@
     <th></th>
     </tr>
     </thead>
-    <tr th:each="course : ${studentList}">
-            <td th:text = "${course.id}"/>
-            <td th:text = "${course.name}"/>
-            <td th:text = "${course.coursesCount}"/>
-            <td><a th:href= "'/student/detail/'+${course.id}">Информация о студенте</a> </td>
+    <tr th:each="student : ${studentList}">
+            <td th:text = "${student.id}"/>
+            <td th:text = "${student.name}"/>
+            <td th:text = "${student.coursesCount}"/>
+            <td><a th:href= "${studentPage.getURL_ReplaceID(student.id)}" th:text="${studentPage.getTITLE()}">Информация о студенте</a> </td>
     </tr>
     </table>
 

@@ -11,11 +11,11 @@
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
 
-    <title>Редактирование списка курсов</title>
+    <title th:text="${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${student.name}">Редактирование списка курсов </title>
 </head>
 <body>
 
-<div th:with="title='Редактирование курсов студента '+${student.name}" th:insert="~{header :: header}"></div>
+<div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${student.name}" th:insert="~{header :: header}"></div>
 
 
     <div class="row">
@@ -27,7 +27,7 @@
 
                 <a th:each="course : ${courseList}" class="list-group-item list-group-item-action"
                    th:id="'list-'+${course.id}+'-list'" data-toggle="list" th:href="'#list-'+${course.id}" role="tab"
-                   aria-controls="profile" th:text="${course.description} ">Profile</a>
+                   aria-controls="profile" th:text="${course.description} ">описание</a>
 
 
 
@@ -35,7 +35,7 @@
 
                 <a th:each="course : ${courseListNew}" class="list-group-item list-group-item-action"
                    th:id="'list-'+${course.id}+'-list'" data-toggle="list" th:href="'#list-'+${course.id}" role="tab"
-                   aria-controls="profile" th:text="${course.description} ">Profile</a>
+                   aria-controls="profile" th:text="${course.description} ">описание</a>
 
             </div>
         </div>
@@ -48,17 +48,15 @@
                      aria-labelledby="list-profile-list">
                     <p th:utext="'Курс: '+${course.description}+'<br>ID: '+${course.id}+'<br>Занятий: '+${course.courseLength}">
                         Курс: xxxxx  <br> ID: xxxxx <br>Занятий: 5</p>
-
-                    <a class="btn btn-danger" th:href="'/student/' + ${student.id}+'/remove_course/'+${course.id}" role="button">Удалить курс</a>
-
+                    <a class="btn btn-danger" th:href="${courseRemove.getURL_ReplaceID2(student.id,course.id)}"
+                       th:text="${courseRemove.getTITLE()}" role="button">Удалить курс</a>
                 </div>
                 <div th:each="course: ${courseListNew}" class="tab-pane fade" th:id="'list-'+${course.id}" role="tabpanel"
                      aria-labelledby="list-profile-list">
-
                     <p th:utext="'Курс: '+${course.description}+'<br>ID: '+${course.id}+'<br>Занятий: '+${course.courseLength}">
                     Курс: xxxxx  <br> ID: xxxxx <br>Занятий: 5</p>
-
-                    <a class="btn btn-primary" th:href="'/student/' + ${student.id}+'/add_course/'+${course.id}" role="button">Добавить курс</a>
+                    <a class="btn btn-primary" th:href="${courseAdd.getURL_ReplaceID2(student.id,course.id)}"
+                       th:text="${courseAdd.getTITLE()}" role="button">Добавить курс</a>
 
                 </div>
         </div>

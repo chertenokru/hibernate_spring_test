@@ -9,17 +9,20 @@
     <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
-    <title th:text="'Информация о студенте - '+${student.name}">информация о студенте - ${student.name}</title>
+    <title th:text="${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${student.name}">информация о студенте </title>
 </head>
 <body>
 
-<div th:with="title='Информация о студенте '+${student.name}" th:insert="~{header :: header}"></div>
+<div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${student.name}" th:insert="~{header :: header}"></div>
 
-<a href="/student/" th:href="'/student/'+${student.id}+'/edit'" >Редактировать</a>
+
+<a href="#" th:href="''" >Редактировать</a>
+
 
 <p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
 
-    <a href="/student/" th:href="'/student/'+${student.id}+'/edit_course'" >Редактировать список курсов</a>
+    <a href="/student/" th:href="${studentCourseEditPage.getURL_ReplaceID(student.id)}"
+       th:text="${studentCourseEditPage.getTITLE()}" >Редактировать список курсов</a>
 
 
 <table class="table table-bordered table-striped" >
@@ -35,7 +38,7 @@
         <td th:text="${course.id}"/>
         <td th:text="${course.description}"/>
         <td th:text="${course.courseLength}"/>
-        <td><a th:href="'/course/detail/'+${course.id}">Информация о курсе</a></td>
+        <td><a th:href="${coursePage.getURL_ReplaceID(course.id)}" th:text="${coursePage.getTITLE()}">Информация о курсе</a></td>
     </tr>
 
 </table>
