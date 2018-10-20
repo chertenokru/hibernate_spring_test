@@ -16,31 +16,30 @@
 <div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}" th:insert="~{header :: header}"></div>
 
 
-
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
-<tr>
-    <th scope="col">Id</th>
-    <th scope="col">Название</th>
-    <th scope="col">Кол-во занятий</th>
-    <th scope="col">Кол-во студентов</th>
-    <th scope="col"></th>
-</tr>
-</thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Название</th>
+        <th scope="col">Кол-во занятий</th>
+        <th scope="col">Кол-во студентов</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
 
 
+    <tr th:each="course : ${courseList}">
 
-        <tr th:each="course : ${courseList}">
-
-            <td th:text="${course.id}"/>
-            <td th:text ="${course.description}"/>
-            <td th:text="${course.length}"/>
-            <td th:text ="${course.studentCount}"/>
-            <td><a th:href= "${coursePage.getURL_ReplaceID(course.id)}"
-                   th:text="${coursePage.getTITLE()}">Информация о курсе</a> </td>
+        <td th:text="${course.id}"/>
+        <td th:text="${course.description}"/>
+        <td th:text="${course.length}"/>
+        <td th:text="${course.studentCount}"/>
+        <td><a th:href="${coursePage.getURL_ReplaceID(course.id)}"
+               th:text="${coursePage.getTITLE()}">Информация о курсе</a></td>
     </tr>
 
-    </table>
+</table>
+<div th:insert="~{nav-page :: nav-page}"></div>
 <div th:insert="~{footer :: footer}"></div>
 </body>
 </html>

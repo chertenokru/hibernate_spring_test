@@ -6,6 +6,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.chertenok.spring.hibernate.entity.Course;
@@ -25,6 +26,15 @@ import java.util.Optional;
 public class StudentService {
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
+    private int pageSize = 10;
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     @Autowired
     public void setStudentRepository(StudentRepository studentRepository) {
@@ -36,12 +46,12 @@ public class StudentService {
         this.courseRepository = courseRepository;
     }
 
-    public List<StudentWithCoursesCount> getStudentsList(boolean sortByCourseCount) {
+    public List<StudentWithCoursesCount> getStudentsList(boolean sortByCourseCount,int pageNo) {
 
            List<StudentWithCoursesCount> list =
                 sortByCourseCount?
-                        studentRepository.findAllandCoursesCountSortCount()
-                        :studentRepository.findAllandCoursesCountSortName();
+                        studentRepository.findAllandCoursesCountSortCount(PageRequest.of(pageNo,pageSize))
+                        :studentRepository.findAllandCoursesCountSortName(PageRequest.of(pageNo,pageSize));
         return list;
     }
 
@@ -102,6 +112,15 @@ public class StudentService {
             }
         }
         return student_o;
+    }
+
+    public long getPageCount(){
+        return studentRepository.count()/pageSize+ ((studentRepository.count() % pageSize)>0?1:0);
+
+    }
+
+    public long getCount() {
+        return studentRepository.count();
     }
 }
 

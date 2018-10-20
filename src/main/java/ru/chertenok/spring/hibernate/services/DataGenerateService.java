@@ -36,7 +36,7 @@ public class DataGenerateService {
         courseService.daleteAll();
 
         List<Course> courseList = new ArrayList<>();
-        for (int i = 0; i < random.nextInt(17)+3; i++) {
+        for (int i = 0; i < random.nextInt(37)+13; i++) {
         //for (int i = 0; i < 500000; i++) {
             Course course = new Course();
             course.setDescription(COURSE_NAME+i);
@@ -45,7 +45,7 @@ public class DataGenerateService {
             courseList.add(course);
         }
 
-        for (int i = 0; i < random.nextInt(17)+3; i++) {
+        for (int i = 0; i < random.nextInt(37)+13; i++) {
         //for (int i = 0; i < 50; i++) {
             Student student = new Student();
             student.setName(STUDENT_NAME+i);

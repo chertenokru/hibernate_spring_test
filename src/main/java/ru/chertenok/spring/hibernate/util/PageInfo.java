@@ -13,6 +13,13 @@ public class PageInfo {
         this.NEED_REPLACE = false;
     }
 
+    public PageInfo(String URL, String TITLE) {
+        this.URL = URL;
+        this.TITLE = TITLE;
+        this.SHABLON = "";
+        this.NEED_REPLACE = false;
+    }
+
     public PageInfo(String URL, String TITLE, String SHABLON, boolean NEED_REPLACE) {
         this.URL = URL;
         this.TITLE = TITLE;
@@ -30,12 +37,13 @@ public class PageInfo {
     }
 
     public String getURL_ReplaceID(String id) {
-        return NEED_REPLACE?URL.replaceAll("\\{id\\}",id):getURL();
+        return NEED_REPLACE ? URL.replaceAll("\\{id\\}", id) : getURL();
     }
 
-    public String getURL_ReplaceID2(String id1,String id2) {
-        return NEED_REPLACE?URL.replaceAll("\\{id\\}",id1).replaceAll("\\{id2\\}",id2):getURL();
+    public String getURL_ReplaceID2(String id1, String id2) {
+        return NEED_REPLACE ? URL.replaceAll("\\{id\\}", id1).replaceAll("\\{id2\\}", id2) : getURL();
     }
+
     public String getTITLE() {
         return TITLE;
     }
