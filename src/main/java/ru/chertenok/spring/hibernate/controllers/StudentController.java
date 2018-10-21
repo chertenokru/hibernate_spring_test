@@ -43,12 +43,12 @@ public class StudentController {
     public String studentsList(Model model,
                                @RequestParam(name = "sortCourse", required = false, defaultValue = "false") boolean sort,
                                @RequestParam(value = "page", defaultValue = "1") int page) {
-        List<StudentWithCoursesCount> studentList = studentService.getStudentsList(sort,page-1);
+        List<StudentWithCoursesCount> studentList = studentService.getStudentsList(sort, page - 1);
         model.addAttribute("studentList", studentList);
         model.addAttribute("studentPage", PAGE_MAP.get(PagesName.studentDetail));
 
         model.addAttribute("page", page);
-        model.addAttribute("paginationList", PAGINATION_LIST_STUDENT.getList(studentService.getPageCount(),PAGE_MAP.get(PagesName.studentlist)));
+        model.addAttribute("paginationList", PAGINATION_LIST_STUDENT.getList(studentService.getPageCount(), PAGE_MAP.get(PagesName.studentlist)));
 
         model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist)});
         return PAGE_MAP.get(PagesName.studentlist).getSHABLON();

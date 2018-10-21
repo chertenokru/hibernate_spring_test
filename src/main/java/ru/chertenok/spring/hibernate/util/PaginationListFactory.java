@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaginationListFactory {
-    private  PageInfo pageInfo;
-
-    private  long pageCount;
     private final List<PageInfo> pageInfoList = new ArrayList<>();
+    private PageInfo pageInfo;
+    private long pageCount;
 
     public PaginationListFactory(PageInfo pageInfo, long pageCount) {
         this.pageInfo = pageInfo;
@@ -23,7 +22,6 @@ public class PaginationListFactory {
             pageInfoList.add(new PageInfo(pageInfo.getURL() + "?page=" + i, "" + i));
         }
     }
-
 
 
     public List<PageInfo> getList(long pageCount, PageInfo pageInfo) {

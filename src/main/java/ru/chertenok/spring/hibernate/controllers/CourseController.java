@@ -20,9 +20,9 @@ import static ru.chertenok.spring.hibernate.util.Config.*;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
-    private CourseService courseService;
     private static final PaginationListFactory PAGINATION_LIST_COURSE = new PaginationListFactory
-            (new PageInfo("",""),1);
+            (new PageInfo("", ""), 1);
+    private CourseService courseService;
 
     {
         PAGE_MAP.put(PagesName.courseList, new PageInfo("/course/list", "Список курсов", "course_list"));
@@ -53,12 +53,12 @@ public class CourseController {
 
     @RequestMapping("/list")
     public String courseList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
-        List<CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount(page-1);
+        List<CoursesWithStudentCount> courseList = courseService.findAllWidthStudentCount(page - 1);
 
         model.addAttribute("courseList", courseList);
 
         model.addAttribute("page", page);
-        model.addAttribute("paginationList", PAGINATION_LIST_COURSE.getList(courseService.getPageCount(),PAGE_MAP.get(PagesName.courseList)));
+        model.addAttribute("paginationList", PAGINATION_LIST_COURSE.getList(courseService.getPageCount(), PAGE_MAP.get(PagesName.courseList)));
 
         model.addAttribute("coursePage", PAGE_MAP.get(PagesName.courseDetail));
         model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.courseList)});

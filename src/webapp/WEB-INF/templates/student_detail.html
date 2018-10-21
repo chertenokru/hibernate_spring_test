@@ -13,32 +13,34 @@
 </head>
 <body>
 
-<div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${student.name}" th:insert="~{header :: header}"></div>
+<div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${student.name}"
+     th:insert="~{header :: header}"></div>
 
 
-<a href="#" th:href="''" >Редактировать</a>
+<a href="#" th:href="''">Редактировать</a>
 
 
 <p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
 
-    <a href="/student/" th:href="${studentCourseEditPage.getURL_ReplaceID(student.id)}"
-       th:text="${studentCourseEditPage.getTITLE()}" >Редактировать список курсов</a>
+<a href="/student/" th:href="${studentCourseEditPage.getURL_ReplaceID(student.id)}"
+   th:text="${studentCourseEditPage.getTITLE()}">Редактировать список курсов</a>
 
 
-<table class="table table-bordered table-striped" >
+<table class="table table-bordered table-striped">
     <thead class="thead-dark">
     <tr>
-    <th>Id</th>
-    <th>Название</th>
-    <th>Кол-во занятий</th>
-    <th></th>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Кол-во занятий</th>
+        <th></th>
     </tr>
     </thead>
     <tr th:each="course :${student.courses}">
         <td th:text="${course.id}"/>
         <td th:text="${course.description}"/>
         <td th:text="${course.courseLength}"/>
-        <td><a th:href="${coursePage.getURL_ReplaceID(course.id)}" th:text="${coursePage.getTITLE()}">Информация о курсе</a></td>
+        <td><a th:href="${coursePage.getURL_ReplaceID(course.id)}" th:text="${coursePage.getTITLE()}">Информация о
+            курсе</a></td>
     </tr>
 
 </table>

@@ -17,19 +17,20 @@
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
     <tr>
-    <th>Id</th>
-    <th>Имя</th>
-    <th>Кол-во курсов</th>
-    <th></th>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>Кол-во курсов</th>
+        <th></th>
     </tr>
     </thead>
     <tr th:each="student : ${studentList}">
-            <td th:text = "${student.id}"/>
-            <td th:text = "${student.name}"/>
-            <td th:text = "${student.coursesCount}"/>
-            <td><a th:href= "${studentPage.getURL_ReplaceID(student.id)}" th:text="${studentPage.getTITLE()}">Информация о студенте</a> </td>
+        <td th:text="${student.id}"/>
+        <td th:text="${student.name}"/>
+        <td th:text="${student.coursesCount}"/>
+        <td><a th:href="${studentPage.getURL_ReplaceID(student.id)}" th:text="${studentPage.getTITLE()}">Информация о
+            студенте</a></td>
     </tr>
-    </table>
+</table>
 <div th:insert="~{nav-page :: nav-page}"></div>
 <div th:insert="~{footer :: footer}"></div>
 </body>

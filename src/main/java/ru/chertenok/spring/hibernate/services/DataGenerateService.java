@@ -13,11 +13,11 @@ import java.util.Random;
 @Service
 public class DataGenerateService {
 
-    private StudentService studentService;
-    private CourseService courseService;
     private static final String COURSE_NAME = "COURSE_";
     private static final String STUDENT_NAME = "STUDENT_";
-    private  final Random random = new Random();
+    private final Random random = new Random();
+    private StudentService studentService;
+    private CourseService courseService;
 
     @Autowired
     public void setStudentService(StudentService studentService) {
@@ -36,29 +36,29 @@ public class DataGenerateService {
         courseService.daleteAll();
 
         List<Course> courseList = new ArrayList<>();
-        for (int i = 0; i < random.nextInt(37)+13; i++) {
-        //for (int i = 0; i < 500000; i++) {
+        for (int i = 0; i < random.nextInt(37) + 13; i++) {
+            //for (int i = 0; i < 500000; i++) {
             Course course = new Course();
-            course.setDescription(COURSE_NAME+i);
+            course.setDescription(COURSE_NAME + i);
             course.setCourseLength(random.nextInt(3) + 3);
             course = courseService.save(course);
             courseList.add(course);
         }
 
-        for (int i = 0; i < random.nextInt(37)+13; i++) {
-        //for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < random.nextInt(37) + 13; i++) {
+            //for (int i = 0; i < 50; i++) {
             Student student = new Student();
-            student.setName(STUDENT_NAME+i);
+            student.setName(STUDENT_NAME + i);
 
             if (student.getCourses() == null)
                 student.setCourses(new ArrayList<Course>());
 
 
-            for (int j = 0; j < (random.nextInt(courseList.size()-1) + 1); j++) {
-            //for (int j = 0; j < 100; j++){
+            for (int j = 0; j < (random.nextInt(courseList.size() - 1) + 1); j++) {
+                //for (int j = 0; j < 100; j++){
                 Course course;
                 do
-                  course = courseList.get(random.nextInt(courseList.size()));
+                    course = courseList.get(random.nextInt(courseList.size()));
                 while (student.getCourses().contains(course));
 
                 student.getCourses().add(course);

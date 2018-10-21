@@ -1,7 +1,6 @@
 package ru.chertenok.spring.hibernate.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.chertenok.spring.hibernate.entity.Course;
@@ -42,7 +41,7 @@ public class CourseService {
 
     public List<CoursesWithStudentCount> findAllWidthStudentCount(int pageNo) {
 
-        List<CoursesWithStudentCount> list = courseRepository.findAllandCoursesCount(PageRequest.of(pageNo,pageSize));
+        List<CoursesWithStudentCount> list = courseRepository.findAllandCoursesCount(PageRequest.of(pageNo, pageSize));
 
         return list;
     }
