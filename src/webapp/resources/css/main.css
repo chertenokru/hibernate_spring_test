@@ -14,10 +14,12 @@ body {
     margin-top: 20px;
 }
 .nav-menu{
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 .header{
     margin: 20px 0px;
+    background-color: darkcyan;
+    color: white;
 }
 .footer{
     margin: 40px 0px;

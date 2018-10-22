@@ -12,8 +12,11 @@
 
 </head>
 
+<div th:fragment="title(title)">
 <div
-        class="header page-header d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
-        th:fragment="title(title)">
+        class="header page-header d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+        >
     <h1 th:text="${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${title}">Заголовок</h1>
+</div>
+<div th:insert="~{nav-menu :: nav}"></div>
 </div>
