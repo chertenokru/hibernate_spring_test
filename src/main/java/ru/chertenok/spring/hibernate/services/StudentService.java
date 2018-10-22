@@ -2,14 +2,15 @@ package ru.chertenok.spring.hibernate.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.entity.Student;
+import ru.chertenok.spring.hibernate.interfaces.StudentWithCoursesCount;
+import ru.chertenok.spring.hibernate.repositories.CourseRepository;
 import ru.chertenok.spring.hibernate.repositories.StudentRepository;
 
 import javax.transaction.Transactional;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,28 +18,34 @@ import java.util.Optional;
 @Service
 public class StudentService {
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
+    private int pageSize = 10;
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     @Autowired
     public void setStudentRepository(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
+    @Autowired
+    public void setCourseRepository(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
 
+    public List<StudentWithCoursesCount> getStudentsList(boolean sortByCourseCount, int pageNo) {
 
-    public List<StudentWithCoursesCount> getStudentsList(boolean sortByCourseCount) {
-
-        List<Object[]> list =
-                sortByCourseCount?
-                        studentRepository.findAllandCoursesCountSortCount()
-                        :studentRepository.findAllandCoursesCountSortName();
-
-        List<StudentWithCoursesCount> resList= new ArrayList<>();
-
-        for (Object[] obj: list) {
-            resList.add(new StudentWithCoursesCount((Integer)obj[0],(String)obj[1],(BigInteger)obj[2]));
-
-        }
-        return resList;
+        List<StudentWithCoursesCount> list =
+                sortByCourseCount ?
+                        studentRepository.findAllandCoursesCountSortCount(PageRequest.of(pageNo, pageSize))
+                        : studentRepository.findAllandCoursesCountSortName(PageRequest.of(pageNo, pageSize));
+        return list;
     }
 
     @Transactional
@@ -50,46 +57,65 @@ public class StudentService {
 
     @Transactional
     public List<Course> getCoursesByStudentID(int id) {
-        Optional<Student> student = studentRepository.findById(id);
+        Optional<Student> student = getStudentByID(id);
+        if (student.isPresent()) student.get().getCourses().size();
         return student.isPresent() ? student.get().getCourses() : Collections.emptyList();
     }
 
+    @Transactional
+    public List<Course> getCoursesNotInStudentID(int id) {
+        return studentRepository.getCourseListNotInStudent(id);
+    }
 
-   public static class StudentWithCoursesCount{
-        private long id;
-        private String Name;
-        private long coursesCount;
+    public void deleteAll() {
+        studentRepository.deleteAll();
+    }
 
-        public StudentWithCoursesCount(long id, String name, BigInteger coursesCount) {
-            this.id = id;
-            Name = name;
-            this.coursesCount=coursesCount.longValue();
+    public Student save(Student student) {
+        return studentRepository.save(student);
+    }
+
+    @Transactional
+    public Optional<Student> deleteCourseByID(int id_s, int id_c) {
+        Optional<Student> student = studentRepository.findById(id_s);
+        if (student.isPresent()) {
+            for (Course course : student.get().getCourses()) {
+                if (course.getId() == id_c) {
+                    student.get().getCourses().remove(course);
+                    break;
+                }
+            }
+
+            studentRepository.save(student.get());
         }
+        return student;
+    }
 
-       public long getId() {
-           return id;
-       }
+    @Transactional
+    public Optional<Student> addCourseByID(int id_s, int id_c) {
+        Optional<Student> student_o = studentRepository.findById(id_s);
+        if (student_o.isPresent()) {
+            Student student = student_o.get();
+            Optional<Course> course_o = courseRepository.findById(id_c);
+            if (course_o.isPresent()) {
+                Course course = course_o.get();
+                if (!student.getCourses().contains(course)) {
+                    student.getCourses().add(course);
+                    studentRepository.save(student);
+                }
+            }
+        }
+        return student_o;
+    }
 
-       public void setId(long id) {
-           this.id = id;
-       }
+    public long getPageCount() {
+        return studentRepository.count() / pageSize + ((studentRepository.count() % pageSize) > 0 ? 1 : 0);
 
-       public String getName() {
-           return Name;
-       }
+    }
 
-       public void setName(String name) {
-           Name = name;
-       }
-
-       public long getCoursesCount() {
-           return coursesCount;
-       }
-
-       public void setCoursesCount(long coursesCount) {
-           this.coursesCount = coursesCount;
-       }
-   }
+    public long getCount() {
+        return studentRepository.count();
+    }
 }
 
 

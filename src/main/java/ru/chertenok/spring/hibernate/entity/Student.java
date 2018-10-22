@@ -18,7 +18,7 @@ public class Student implements Serializable {
 
 
     //@ManyToMany(fetch = FetchType.EAGER)
-    @ManyToMany()
+    @ManyToMany( cascade =  CascadeType.ALL)
     @JoinTable(name = "education",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
