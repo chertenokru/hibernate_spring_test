@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
-    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
-    <title>Main</title>
-</head>
+<div  th:replace="~{header :: head(title='')}"/>
+
 <body>
 
-<div th:with="title='Меню'" th:insert="~{header :: header}"></div>
+<div th:replace ="~{header :: title(title= '')}"/>
+
 
 <div class="container">
     <div th:if="${!mainMessage.isEmpty()}" class="alert alert-success" role="alert" th:text="${mainMessage}">
