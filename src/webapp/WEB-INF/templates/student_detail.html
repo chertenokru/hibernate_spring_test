@@ -1,40 +1,29 @@
-<!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-<div  th:replace="~{header :: head(title= ${student.name})}"/>
-
-<body>
-
-<div th:replace ="~{header :: title(title= ${student.name})}"/>
+<div xmlns:th="http://www.thymeleaf.org">
+    <a href="#" th:href="''">Редактировать</a>
 
 
-<a href="#" th:href="''">Редактировать</a>
+    <p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
+
+    <a href="/student/" th:href="${studentCourseEditPageLink.getURL_ReplaceID(student.id)}"
+       th:text="${studentCourseEditPageLink.getTITLE()}">Редактировать список курсов</a>
 
 
-<p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Название</th>
+            <th>Кол-во занятий</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr th:each="course :${student.courses}">
+            <td th:text="${course.id}"/>
+            <td th:text="${course.description}"/>
+            <td th:text="${course.courseLength}"/>
+            <td><a th:href="${courseDetailPageLink.getURL_ReplaceID(course.id)}"
+                   th:text="${courseDetailPageLink.getTITLE()}">Информация о курсе</a></td>
+        </tr>
 
-<a href="/student/" th:href="${studentCourseEditPage.getURL_ReplaceID(student.id)}"
-   th:text="${studentCourseEditPage.getTITLE()}">Редактировать список курсов</a>
-
-
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
-    <tr>
-        <th>Id</th>
-        <th>Название</th>
-        <th>Кол-во занятий</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tr th:each="course :${student.courses}">
-        <td th:text="${course.id}"/>
-        <td th:text="${course.description}"/>
-        <td th:text="${course.courseLength}"/>
-        <td><a th:href="${coursePage.getURL_ReplaceID(course.id)}" th:text="${coursePage.getTITLE()}">Информация о
-            курсе</a></td>
-    </tr>
-
-</table>
-<div th:insert="~{footer :: footer}"></div>
-</body>
-</html>
+    </table>
+</div>

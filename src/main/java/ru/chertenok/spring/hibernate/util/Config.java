@@ -11,6 +11,6 @@ public class Config {
 
     public enum PagesName {
         home, page404, studentlist, studentDetail, studentCourseEdit, courseList, courseDetail,
-        studentCourseEditAdd, studentCourseEditRemove
+        studentCourseEditAdd, studentCourseEditRemove,mainShablon
     }
 }

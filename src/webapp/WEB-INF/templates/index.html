@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-
-<div  th:replace="~{header :: head(title='')}"/>
-
-<body>
-
-<div th:replace ="~{header :: title(title= '')}"/>
-
-
-<div class="container">
+<div class="container" xmlns:th="http://www.thymeleaf.org">
     <div th:if="${!mainMessage.isEmpty()}" class="alert alert-success" role="alert" th:text="${mainMessage}">
 
     </div>
@@ -22,10 +11,3 @@
         </ul>
     </div>
 </div>
-
-<div th:insert="~{footer :: footer}"></div>
-
-</body>
-
-</body>
-</html>

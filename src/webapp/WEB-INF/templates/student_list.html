@@ -1,16 +1,5 @@
-<!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-
-<div  th:replace="~{header :: head(title= '')}"/>
-
-<body>
-
-<div th:replace ="~{header :: title(title= '')}"/>
-
-
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" xmlns:th="http://www.thymeleaf.org">
     <thead class="thead-dark">
     <tr>
         <th>Id</th>
@@ -23,11 +12,7 @@
         <td th:text="${student.id}"/>
         <td th:text="${student.name}"/>
         <td th:text="${student.coursesCount}"/>
-        <td><a th:href="${studentPage.getURL_ReplaceID(student.id)}" th:text="${studentPage.getTITLE()}">Информация о
+        <td><a th:href="${studentDetailPageLink.getURL_ReplaceID(student.id)}" th:text="${studentDetailPageLink.getTITLE()}">Информация о
             студенте</a></td>
     </tr>
 </table>
-<div th:insert="~{nav-page :: nav-page}"></div>
-<div th:insert="~{footer :: footer}"></div>
-</body>
-</html>

@@ -16,28 +16,30 @@ public class MainController {
     {
         PAGE_MAP.put(PagesName.home, new PageInfo("/", "Home", "index"));
         PAGE_MAP.put(PagesName.page404, new PageInfo("/", "${message}", "page404"));
+        PAGE_MAP.put(PagesName.mainShablon, new PageInfo("/", "${message}", "main"));
     }
 
 
     @Autowired
-    public String setDataGenerateService(DataGenerateService dataGenerateService) {
+    public void setDataGenerateService(DataGenerateService dataGenerateService) {
         this.dataGenerateService = dataGenerateService;
-        return PAGE_MAP.get(PagesName.home).getSHABLON();
     }
 
     @RequestMapping("/")
     public String index(Model model){
         model.addAttribute("mainMessage","");
+        model.addAttribute("contentPage",PAGE_MAP.get(PagesName.home).getSHABLON());
         model.addAttribute(BREADCRUMB, new PageInfo[] { PAGE_MAP.get(PagesName.home)});
-        return PAGE_MAP.get(PagesName.home).getSHABLON();
+        return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
     @RequestMapping("/generate")
     public String generateData(Model model){
         dataGenerateService.generateData();
         model.addAttribute("mainMessage","Данные сгенерированы");
+        model.addAttribute("contentPage",PAGE_MAP.get(PagesName.home).getSHABLON());
         model.addAttribute(BREADCRUMB, new PageInfo[] { PAGE_MAP.get(PagesName.home)});
-        return PAGE_MAP.get(PagesName.home).getSHABLON();
+        return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 }
 

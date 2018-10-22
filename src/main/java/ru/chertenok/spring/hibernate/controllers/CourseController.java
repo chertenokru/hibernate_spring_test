@@ -26,7 +26,7 @@ public class CourseController {
 
     {
         PAGE_MAP.put(PagesName.courseList, new PageInfo("/course/list", "Список курсов", "course_list"));
-        PAGE_MAP.put(PagesName.courseDetail, new PageInfo("/course/detail/{id}", "Информация о курсе", "course_detail", true));
+        PAGE_MAP.put(PagesName.courseDetail, new PageInfo("/course/detail/{id}", "Информация о курсе ", "course_detail", true));
     }
 
 
@@ -40,14 +40,17 @@ public class CourseController {
         Optional<Course> course = courseService.getCourseyID(id);
         if (!course.isPresent()) {
             model.addAttribute(MESSAGE404, "Курс с таким id  не существует");
+            model.addAttribute("contentPage", PAGE_MAP.get(PagesName.page404).getSHABLON());
             model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.courseList), PAGE_MAP.get(PagesName.page404)});
-            return PAGE_MAP.get(PagesName.page404).getSHABLON();
+            return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
         }
+        // data
         model.addAttribute("course", course.get());
-        model.addAttribute("studentDetailPage", PAGE_MAP.get(PagesName.studentDetail));
-
+        model.addAttribute("studentDetailPageLink", PAGE_MAP.get(PagesName.studentDetail));
+        //nav
+        model.addAttribute("contentPage", PAGE_MAP.get(PagesName.courseDetail).getSHABLON());
         model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.courseList), PAGE_MAP.get(PagesName.courseDetail)});
-        return PAGE_MAP.get(PagesName.courseDetail).getSHABLON();
+        return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
 
@@ -60,11 +63,11 @@ public class CourseController {
         model.addAttribute("page", page);
         model.addAttribute("paginationList", PAGINATION_LIST_COURSE.getList(courseService.getPageCount(), PAGE_MAP.get(PagesName.courseList)));
 
-        model.addAttribute("coursePage", PAGE_MAP.get(PagesName.courseDetail));
+        model.addAttribute("courseDetailPageLink", PAGE_MAP.get(PagesName.courseDetail));
+        model.addAttribute("contentPage", PAGE_MAP.get(PagesName.courseList).getSHABLON());
+
         model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.courseList)});
-
-        return PAGE_MAP.get(PagesName.courseList).getSHABLON();
-
+        return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
 }

@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-
-<div  th:replace="~{header :: head(title= ${course.description})}"/>
-
-<body>
-
-<div th:replace ="~{header :: title(title= ${course.description})}"/>
-
+<div xmlns:th="http://www.thymeleaf.org">
 На курсе обучаются студенты :
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" >
     <thead class="thead-dark">
     <tr>
     <th scope="col">Id</th>
@@ -20,10 +11,8 @@
         <tr th:each="student : ${course.students}" >
             <td th:text="${student.id}"/>
             <td th:text="${student.name}"/>
-            <td><a th:href="${studentDetailPage.getURL_ReplaceID(student.id)}" th:text="${studentDetailPage.getTITLE()}">Информация о студенте</a></td>
+            <td><a th:href="${studentDetailPageLink.getURL_ReplaceID(student.id)}" th:text="${studentDetailPageLink.getTITLE()}">Информация о студенте</a></td>
         </tr>
 
 </table>
-<div th:insert="~{footer :: footer}"></div>
-</body>
-</html>
+</div>

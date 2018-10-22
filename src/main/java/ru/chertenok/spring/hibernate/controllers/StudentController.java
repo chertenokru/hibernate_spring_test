@@ -45,13 +45,13 @@ public class StudentController {
                                @RequestParam(value = "page", defaultValue = "1") int page) {
         List<StudentWithCoursesCount> studentList = studentService.getStudentsList(sort, page - 1);
         model.addAttribute("studentList", studentList);
-        model.addAttribute("studentPage", PAGE_MAP.get(PagesName.studentDetail));
+        model.addAttribute("studentDetailPageLink", PAGE_MAP.get(PagesName.studentDetail));
 
         model.addAttribute("page", page);
+        model.addAttribute("contentPage", PAGE_MAP.get(PagesName.studentlist).getSHABLON());
         model.addAttribute("paginationList", PAGINATION_LIST_STUDENT.getList(studentService.getPageCount(), PAGE_MAP.get(PagesName.studentlist)));
-
         model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist)});
-        return PAGE_MAP.get(PagesName.studentlist).getSHABLON();
+        return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
     @RequestMapping(path = "/detail/{id}", method = RequestMethod.GET)
@@ -60,90 +60,54 @@ public class StudentController {
         Optional<Student> student = studentService.getStudentByID(id);
         if (!student.isPresent()) {
             model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
+            model.addAttribute("contentPage", PAGE_MAP.get(PagesName.page404).getSHABLON());
             model.addAttribute(BREADCRUMB,
                     new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
-
-            return PAGE_MAP.get(PagesName.page404).getSHABLON();
+            return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
         }
         model.addAttribute("student", student.get());
-        model.addAttribute("coursePage", PAGE_MAP.get(PagesName.courseDetail));
-        model.addAttribute("studentCourseEditPage", PAGE_MAP.get(PagesName.studentCourseEdit));
-        // model.addAttribute("courseList",studentService.getCoursesByStudentID(id));
+        model.addAttribute("courseDetailPageLink", PAGE_MAP.get(PagesName.courseDetail));
+        model.addAttribute("studentCourseEditPageLink", PAGE_MAP.get(PagesName.studentCourseEdit));
+        model.addAttribute("contentPage", PAGE_MAP.get(PagesName.studentDetail).getSHABLON());
         model.addAttribute(BREADCRUMB,
                 new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentDetail)});
-        return PAGE_MAP.get(PagesName.studentDetail).getSHABLON();
+
+        return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
     @RequestMapping(path = "/{id}/edit_course", method = RequestMethod.GET)
     public String studentDetailByIDEdit(Model model, @PathVariable int id) {
 
         Optional<Student> student = studentService.getStudentByID(id);
-        if (!student.isPresent()) {
-            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
+        if (checkStudentIsPresent(model, student)) {
             model.addAttribute(BREADCRUMB,
                     new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
-            return PAGE_MAP.get(PagesName.page404).getSHABLON();
+            return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
         }
+
         model.addAttribute("student", student.get());
         model.addAttribute("courseList", studentService.getCoursesByStudentID(id));
         model.addAttribute("courseListNew", studentService.getCoursesNotInStudentID(id));
 
-        model.addAttribute("courseAdd", PAGE_MAP.get(PagesName.studentCourseEditAdd));
-        model.addAttribute("courseRemove", PAGE_MAP.get(PagesName.studentCourseEditRemove));
+        model.addAttribute("courseAddLink", PAGE_MAP.get(PagesName.studentCourseEditAdd));
+        model.addAttribute("courseRemoveLink", PAGE_MAP.get(PagesName.studentCourseEditRemove));
+        model.addAttribute("contentPage", PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON());
         model.addAttribute(BREADCRUMB,
                 new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentDetail), PAGE_MAP.get(PagesName.studentCourseEdit)});
-
-        return PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON();
+        return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
     @RequestMapping(path = "/{id_s}/add_course/{id_c}", method = RequestMethod.GET)
     public String studentAddCourseByID(Model model, @PathVariable int id_s, @PathVariable int id_c) {
-
-        Optional<Student> student = studentService.addCourseByID(id_s, id_c);
-
-        if (!student.isPresent()) {
-            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
-            model.addAttribute(BREADCRUMB,
-                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
-            return PAGE_MAP.get(PagesName.page404).getSHABLON();
-        }
-
-        model.addAttribute("student", student.get());
-        model.addAttribute("courseList", studentService.getCoursesByStudentID(id_s));
-        model.addAttribute("courseListNew", studentService.getCoursesNotInStudentID(id_s));
-
-        model.addAttribute("id", id_s);
-        model.addAttribute("courseAdd", PAGE_MAP.get(PagesName.studentCourseEditAdd));
-        model.addAttribute("courseRemove", PAGE_MAP.get(PagesName.studentCourseEditRemove));
-        model.addAttribute(BREADCRUMB,
-                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentDetail),
-                        PAGE_MAP.get(PagesName.studentCourseEdit)});
-        return PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON();
+        studentService.addCourseByID(id_s, id_c);
+        return "redirect:" + PAGE_MAP.get(PagesName.studentCourseEdit).getURL_ReplaceID("" + id_s);
     }
+
 
     @RequestMapping(path = "/{id_s}/remove_course/{id_c}", method = RequestMethod.GET)
     public String studentRemoveCourseByID(Model model, @PathVariable int id_s, @PathVariable int id_c) {
-
-        Optional<Student> student = studentService.deleteCourseByID(id_s, id_c);
-
-        if (!student.isPresent()) {
-            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
-            model.addAttribute(BREADCRUMB,
-                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
-            return PAGE_MAP.get(PagesName.page404).getSHABLON();
-        }
-
-        model.addAttribute("student", student.get());
-        model.addAttribute("courseList", studentService.getCoursesByStudentID(id_s));
-        model.addAttribute("courseListNew", studentService.getCoursesNotInStudentID(id_s));
-
-        model.addAttribute("id", id_s);
-        model.addAttribute("courseAdd", PAGE_MAP.get(PagesName.studentCourseEditAdd));
-        model.addAttribute("courseRemove", PAGE_MAP.get(PagesName.studentCourseEditRemove));
-        model.addAttribute(BREADCRUMB,
-                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentDetail),
-                        PAGE_MAP.get(PagesName.studentCourseEdit)});
-        return PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON();
+      studentService.deleteCourseByID(id_s, id_c);
+      return "redirect:" + PAGE_MAP.get(PagesName.studentCourseEdit).getURL_ReplaceID("" + id_s);
     }
 
  /*   @RequestMapping(path = "/{id}/edit", method = RequestMethod.GET)
@@ -164,4 +128,15 @@ public class StudentController {
     }
     */
 
+
+    private boolean checkStudentIsPresent(Model model, Optional<Student> student) {
+        if (!student.isPresent()) {
+            model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
+            model.addAttribute(BREADCRUMB,
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+            model.addAttribute("contentPage", PAGE_MAP.get(PagesName.page404).getSHABLON());
+            return true;
+        }
+        return false;
+    }
 }
