@@ -10,7 +10,7 @@ public class Config {
     final public static String MESSAGE404 = "message";
 
     public enum PagesName {
-        home, page404, studentlist, studentDetail, studentCourseEdit, courseList, courseDetail,
-        studentCourseEditAdd, studentCourseEditRemove,mainShablon
+        home, page404, studentList, studentDetail, studentCourseEdit, courseList, courseDetail,
+        studentCourseEditAdd, studentCourseEditRemove,mainShablon,userList
     }
 }

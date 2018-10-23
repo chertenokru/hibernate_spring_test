@@ -1,0 +1,24 @@
+
+<table class="table table-bordered table-striped" xmlns:th="http://www.thymeleaf.org">
+    <thead class="thead-dark">
+    <tr>
+
+        <th scope="col">Имя</th>
+        <th scope="col">Роли</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+
+
+    <tr th:each="user : ${userList}">
+
+        <td th:text="${user.userName}"/>
+        <td>
+            <p th:each="role: ${user.roleList}" th:text="${role.name} "/>
+
+        </td>
+        <td />
+
+    </tr>
+
+</table>

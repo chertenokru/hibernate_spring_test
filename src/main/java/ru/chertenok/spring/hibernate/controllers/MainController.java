@@ -16,7 +16,7 @@ public class MainController {
     {
         PAGE_MAP.put(PagesName.home, new PageInfo("/", "Home", "index"));
         PAGE_MAP.put(PagesName.page404, new PageInfo("/", "${message}", "page404"));
-        PAGE_MAP.put(PagesName.mainShablon, new PageInfo("/", "${message}", "main"));
+        PAGE_MAP.put(PagesName.mainShablon, new PageInfo("/", "${message}", "main_shablon"));
     }
 
 

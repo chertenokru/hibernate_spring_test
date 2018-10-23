@@ -26,7 +26,7 @@ public class StudentController {
     private StudentService studentService;
 
     {
-        PAGE_MAP.put(PagesName.studentlist, new PageInfo("/student/list", "Список студентов", "student_list"));
+        PAGE_MAP.put(PagesName.studentList, new PageInfo("/student/list", "Список студентов", "student_list"));
         PAGE_MAP.put(PagesName.studentDetail, new PageInfo("/student/detail/{id}", "Информация о студенте", "student_detail", true));
         PAGE_MAP.put(PagesName.studentCourseEdit, new PageInfo("/student/{id}/edit_course", "Редактирование курсов студента", "education", true));
         PAGE_MAP.put(PagesName.studentCourseEditAdd, new PageInfo("/student/{id}/add_course/{id2}", "Добавить курс", "education", true));
@@ -48,9 +48,9 @@ public class StudentController {
         model.addAttribute("studentDetailPageLink", PAGE_MAP.get(PagesName.studentDetail));
 
         model.addAttribute("page", page);
-        model.addAttribute("contentPage", PAGE_MAP.get(PagesName.studentlist).getSHABLON());
-        model.addAttribute("paginationList", PAGINATION_LIST_STUDENT.getList(studentService.getPageCount(), PAGE_MAP.get(PagesName.studentlist)));
-        model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist)});
+        model.addAttribute("contentPage", PAGE_MAP.get(PagesName.studentList).getSHABLON());
+        model.addAttribute("paginationList", PAGINATION_LIST_STUDENT.getList(studentService.getPageCount(), PAGE_MAP.get(PagesName.studentList)));
+        model.addAttribute(BREADCRUMB, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentList)});
         return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
@@ -62,7 +62,7 @@ public class StudentController {
             model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
             model.addAttribute("contentPage", PAGE_MAP.get(PagesName.page404).getSHABLON());
             model.addAttribute(BREADCRUMB,
-                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentList), PAGE_MAP.get(PagesName.page404)});
             return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
         }
         model.addAttribute("student", student.get());
@@ -70,7 +70,7 @@ public class StudentController {
         model.addAttribute("studentCourseEditPageLink", PAGE_MAP.get(PagesName.studentCourseEdit));
         model.addAttribute("contentPage", PAGE_MAP.get(PagesName.studentDetail).getSHABLON());
         model.addAttribute(BREADCRUMB,
-                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentDetail)});
+                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentList), PAGE_MAP.get(PagesName.studentDetail)});
 
         return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
@@ -81,7 +81,7 @@ public class StudentController {
         Optional<Student> student = studentService.getStudentByID(id);
         if (checkStudentIsPresent(model, student)) {
             model.addAttribute(BREADCRUMB,
-                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentList), PAGE_MAP.get(PagesName.page404)});
             return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
         }
 
@@ -93,7 +93,7 @@ public class StudentController {
         model.addAttribute("courseRemoveLink", PAGE_MAP.get(PagesName.studentCourseEditRemove));
         model.addAttribute("contentPage", PAGE_MAP.get(PagesName.studentCourseEdit).getSHABLON());
         model.addAttribute(BREADCRUMB,
-                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.studentDetail), PAGE_MAP.get(PagesName.studentCourseEdit)});
+                new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentList), PAGE_MAP.get(PagesName.studentDetail), PAGE_MAP.get(PagesName.studentCourseEdit)});
         return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 
@@ -133,7 +133,7 @@ public class StudentController {
         if (!student.isPresent()) {
             model.addAttribute(MESSAGE404, "Студент с таким ID не найден");
             model.addAttribute(BREADCRUMB,
-                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentlist), PAGE_MAP.get(PagesName.page404)});
+                    new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.studentList), PAGE_MAP.get(PagesName.page404)});
             model.addAttribute("contentPage", PAGE_MAP.get(PagesName.page404).getSHABLON());
             return true;
         }
