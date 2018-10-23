@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.chertenok.spring.hibernate.services.DataGenerateService;
 import ru.chertenok.spring.hibernate.util.PageInfo;
 
-import static ru.chertenok.spring.hibernate.util.Config.*;
+import static ru.chertenok.spring.hibernate.config.Config.*;
 
 @Controller
 public class MainController {

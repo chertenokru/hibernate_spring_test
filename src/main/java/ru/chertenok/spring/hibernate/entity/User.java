@@ -14,9 +14,9 @@ public class User {
     @Column(name = "password")
     private String password;
     @ManyToMany (fetch = FetchType.EAGER)
-    @JoinTable(name = "rights",
+    @JoinTable(name = "authorities",
             joinColumns = @JoinColumn(name = "username"),
-            inverseJoinColumns = @JoinColumn(name = "rolename")
+            inverseJoinColumns = @JoinColumn(name = "authority")
     )
     private List<UserRole> roleList;
 

@@ -5,11 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.chertenok.spring.hibernate.services.UserService;
-import ru.chertenok.spring.hibernate.util.Config;
 import ru.chertenok.spring.hibernate.util.PageInfo;
 
-import static ru.chertenok.spring.hibernate.util.Config.*;
-import static ru.chertenok.spring.hibernate.util.Config.PAGE_MAP;
+import static ru.chertenok.spring.hibernate.config.Config.*;
+import static ru.chertenok.spring.hibernate.config.Config.PAGE_MAP;
 
 @Controller
 @RequestMapping("/user")

@@ -1,4 +1,6 @@
-package ru.chertenok.spring.hibernate.util;
+package ru.chertenok.spring.hibernate.config;
+
+import ru.chertenok.spring.hibernate.util.PageInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,4 +15,5 @@ public class Config {
         home, page404, studentList, studentDetail, studentCourseEdit, courseList, courseDetail,
         studentCourseEditAdd, studentCourseEditRemove,mainShablon,userList
     }
+
 }

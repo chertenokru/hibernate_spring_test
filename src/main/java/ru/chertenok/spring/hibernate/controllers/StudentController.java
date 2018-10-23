@@ -16,7 +16,7 @@ import ru.chertenok.spring.hibernate.util.PaginationListFactory;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.chertenok.spring.hibernate.util.Config.*;
+import static ru.chertenok.spring.hibernate.config.Config.*;
 
 @Controller
 @RequestMapping("/student")
