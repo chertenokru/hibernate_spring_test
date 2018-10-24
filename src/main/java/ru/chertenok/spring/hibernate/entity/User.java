@@ -6,30 +6,40 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
-    @Column(name="username")
-    private String userName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name="name")
+    private String name;
     @Column(name = "enabled")
     private boolean isEnabled;
     @Column(name = "password")
     private String password;
     @ManyToMany (fetch = FetchType.EAGER)
-    @JoinTable(name = "authorities",
-            joinColumns = @JoinColumn(name = "username"),
-            inverseJoinColumns = @JoinColumn(name = "authority")
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id")
     )
     private List<UserRole> roleList;
 
     @Override
     public String toString() {
         return "User{" +
-                "userName='" + userName + '\'' +
+                "userName='" + name + '\'' +
                 ", isEnabled=" + isEnabled +
                 ", password='" + password + '\'' +
                 '}';
     }
 
     public User() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<UserRole> getRoleList() {
@@ -40,12 +50,12 @@ public class User {
         this.roleList = roleList;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isEnabled() {

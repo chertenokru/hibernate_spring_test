@@ -4,15 +4,57 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class UserRole {
     @Id
-    @Column(name = "rolename")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
     private String name;
-    @ManyToMany(mappedBy = "roleList")
-    private List<User> userList;
+    @Column(name = "built-in")
+    private boolean builtin;
+    @Column(name = "description")
+    private String description;
+
+    @ManyToMany
+    @JoinTable(name = "role_permission",
+            joinColumns = @JoinColumn(name = "role_id"))
+    private List<Permission> permissionList;
 
     public UserRole() {
+    }
+
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isBuiltin() {
+        return builtin;
+    }
+
+    public void setBuiltin(boolean builtin) {
+        this.builtin = builtin;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -30,11 +72,5 @@ public class UserRole {
         this.name = name;
     }
 
-    public List<User> getUserList() {
-        return userList;
-    }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
 }
