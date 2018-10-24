@@ -12,7 +12,7 @@ public class UserRole {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "built-in")
+    @Column(name = "builtin")
     private boolean builtin;
     @Column(name = "description")
     private String description;

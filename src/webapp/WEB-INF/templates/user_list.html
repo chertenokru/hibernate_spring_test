@@ -3,21 +3,25 @@
     <thead class="thead-dark">
     <tr>
 
+        <th scope="col">ID</th>
         <th scope="col">Имя</th>
+        <th scope="col">Активен</th>
+        <th scope="col">Пароль</th>
         <th scope="col">Роли</th>
-        <th scope="col"></th>
+
     </tr>
     </thead>
 
 
+    <!--/*@thymesVar id="user" type="ru.chertenok.spring.hibernate.entity.User"*/-->
     <tr th:each="user : ${userList}">
 
-        <td th:text="${user.userName}"/>
-        <td>
-            <p th:each="role: ${user.roleList}" th:text="${role.name} "/>
+        <td th:text="${user.id}"/>
+        <td th:text="${user.name}"/>
+        <td th:text="${user.enabled}"/>
+        <td th:text="${user.password}"/>
+        <td th:text="${user.roleList}"/>
 
-        </td>
-        <td />
 
     </tr>
 

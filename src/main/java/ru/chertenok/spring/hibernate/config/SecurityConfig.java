@@ -23,9 +23,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (1)
-        auth.jdbcAuthentication().dataSource(dataSource);
+        auth.jdbcAuthentication().dataSource(dataSource).
+                usersByUsernameQuery("SELECT NAME, PASSWORD, ENABLED FROM USERS WHERE NAME=?")
+                .authoritiesByUsernameQuery("SELECT u.name,p.name FROM users u" +
+                        " JOIN  user_role ur ON u.id=ur.user_id " +
+                        " JOIN role_permission rp ON rp.role_id=ur.role_id " +
+                        " JOIN permissions p ON p.id=rp.permission_id " +
+                        " WHERE u.name = ?").rolePrefix("ROLE_");
+
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/").permitAll()
+                .antMatchers("/user/**").hasRole("COURSE-LIST")
+                .and().formLogin().loginProcessingUrl("/authenticateTheUser").permitAll();
+    }
+
+// sample
 // @Override
 // protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (2)
 // User.UserBuilder users = User.withDefaultPasswordEncoder();
@@ -35,10 +50,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 // }
 
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/user/**").hasRole("ADMIN")
-                .and().formLogin().loginProcessingUrl("/authenticateTheUser").permitAll();
-    }
 }

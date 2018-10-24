@@ -1,7 +1,17 @@
-<div class="container" xmlns:th="http://www.thymeleaf.org">
+<div class="container" xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+    <div sec:authorize="isAuthenticated()">
+        Authenticated username:
+        <div sec:authentication="principal.username"></div>
+        Authenticated user roles:
+        <div sec:authentication="principal.authorities"></div>
+    </div>
     <div th:if="${!mainMessage.isEmpty()}" class="alert alert-success" role="alert" th:text="${mainMessage}">
 
     </div>
+
     <div class="btn-group-vertical">
         <ul>
             <li><a href="/student/list">Список студентов</a></li>
