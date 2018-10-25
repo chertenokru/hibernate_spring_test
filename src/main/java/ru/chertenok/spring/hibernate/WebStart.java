@@ -24,7 +24,7 @@ public class WebStart {
         WebAppContext webapp = new WebAppContext();
         webapp.setContextPath("/");
         webapp.setWar(location.toExternalForm());
-      //  webapp.addFilter(new FilterHolder(new DelegatingFilterProxy("springSecurityFilterChain")), "/*", EnumSet.allOf(DispatcherType.class));
+        webapp.addFilter(new FilterHolder(new DelegatingFilterProxy("springSecurityFilterChain")), "/*", EnumSet.allOf(DispatcherType.class));
         server.setHandler(webapp);
         try {
             server.start();

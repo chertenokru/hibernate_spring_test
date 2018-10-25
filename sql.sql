@@ -16,6 +16,21 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`geek_db` /*!40100 DEFAULT CHARACTER SET
 
 USE `geek_db`;
 
+/*Table structure for table `authorities` */
+
+DROP TABLE IF EXISTS `authorities`;
+
+CREATE TABLE `authorities` (
+  `rolename` varchar(50) NOT NULL,
+  `authority` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `authorities` */
+
+insert  into `authorities`(`rolename`,`authority`) values 
+('admin','ROLE_ADMIN'),
+('user','ROLE_USER');
+
 /*Table structure for table `course` */
 
 DROP TABLE IF EXISTS `course`;
@@ -216,9 +231,9 @@ CREATE TABLE `roles` (
 /*Data for the table `roles` */
 
 insert  into `roles`(`name`,`id`,`builtin`,`description`) values 
-('ROLE_ADMIN',1,1,''),
-('ROLE_MANAGER',2,0,''),
-('ROLE_USER',3,0,'');
+('ADMIN',1,1,''),
+('MANAGER',2,0,''),
+('USER',3,1,'');
 
 /*Table structure for table `student` */
 
@@ -267,7 +282,8 @@ CREATE TABLE `user_role` (
 
 insert  into `user_role`(`user_id`,`role_id`) values 
 (1,1),
-(2,3);
+(2,3),
+(3,3);
 
 /*Table structure for table `users` */
 
@@ -280,13 +296,14 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
 insert  into `users`(`name`,`password`,`enabled`,`id`) values 
 ('admin','{noop}admin',1,1),
-('user','{noop}user',1,2);
+('user','{noop}user',1,2),
+('ivanov','{noop}petr',1,3);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

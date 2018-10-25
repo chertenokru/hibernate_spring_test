@@ -16,7 +16,7 @@ public class User {
     private boolean isEnabled;
     @Column(name = "password")
     private String password;
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
@@ -73,5 +73,12 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User(String name, boolean isEnabled, String password, List<UserRole> roleList) {
+        this.name = name;
+        this.isEnabled = isEnabled;
+        this.password = password;
+        this.roleList = roleList;
     }
 }

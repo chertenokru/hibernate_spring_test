@@ -26,9 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication().dataSource(dataSource).
                 usersByUsernameQuery("SELECT NAME, PASSWORD, ENABLED FROM USERS WHERE NAME=?")
                 .authoritiesByUsernameQuery("SELECT u.name,p.name FROM users u" +
-                        " JOIN  user_role ur ON u.id=ur.user_id " +
-                        " JOIN role_permission rp ON rp.role_id=ur.role_id " +
-                        " JOIN permissions p ON p.id=rp.permission_id " +
+                        " left JOIN  user_role ur ON u.id=ur.user_id " +
+                        " left JOIN role_permission rp ON rp.role_id=ur.role_id " +
+                        " left JOIN permissions p ON p.id=rp.permission_id " +
                         " WHERE u.name = ?").rolePrefix("ROLE_");
 
     }
@@ -36,8 +36,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/user/**").hasRole("COURSE-LIST")
-                .and().formLogin().loginProcessingUrl("/authenticateTheUser").permitAll();
+                .antMatchers("/course/**").hasRole("COURSE-LIST")
+                .and()
+                .formLogin().loginPage("/user/loginForm")
+                .loginProcessingUrl("/authenticateTheUser").permitAll()
+                .and().logout().permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/user/accessDenied");
+        ;
     }
 
 // sample

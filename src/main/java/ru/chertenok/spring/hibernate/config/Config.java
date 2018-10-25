@@ -13,7 +13,7 @@ public class Config {
 
     public enum PagesName {
         home, page404, studentList, studentDetail, studentCourseEdit, courseList, courseDetail,
-        studentCourseEditAdd, studentCourseEditRemove,mainShablon,userList
+        studentCourseEditAdd, studentCourseEditRemove,mainShablon,userList,userLogin,userAccessDenied
     }
 
 }
