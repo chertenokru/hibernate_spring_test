@@ -19,7 +19,7 @@ public class UserController {
 
     {
         PAGE_MAP.put(PagesName.userList, new PageInfo("/user/list", "Список пользователей", "user_list"));
-        PAGE_MAP.put(PagesName.userLogin, new PageInfo("/user/login", "Авторизация", "user_login"));
+        PAGE_MAP.put(PagesName.userLogin, new PageInfo("/user/login", "Авторизация", "user_login3"));
         PAGE_MAP.put(PagesName.userAccessDenied, new PageInfo("/denied", "Доступ запрещен", "access-denied"));
 
     }
