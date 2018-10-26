@@ -190,12 +190,13 @@ CREATE TABLE `permissions` (
   `description` varchar(300) NOT NULL,
   `module` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `permissions` */
 
 insert  into `permissions`(`id`,`name`,`description`,`module`) values 
-(1,'COURSE-LIST','Просмотр списка курсов','CourseService');
+(1,'COURSE-LIST','Просмотр списка курсов','CourseService'),
+(4,'USERS_LIST_VIEW','Просмотр списка пользователей','USERS');
 
 /*Table structure for table `role_permission` */
 
@@ -213,7 +214,8 @@ CREATE TABLE `role_permission` (
 /*Data for the table `role_permission` */
 
 insert  into `role_permission`(`role_id`,`permission_id`) values 
-(1,1);
+(1,1),
+(1,4);
 
 /*Table structure for table `roles` */
 

@@ -2,7 +2,7 @@
 <div class="container h-100"   xmlns:th="http://www.thymeleaf.org" >
     <div class="row h-100 justify-content-center align-items-center">
         <div class="card">
-            <h4 class="card-header">Login</h4>
+            <h4 class="card-header">Авторизация</h4>
             <div class="card-body">
                 <div th:if="${param.error} != null" class="alert alert-danger" role="alert">
                     Логин или пароль не верны.
@@ -21,7 +21,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" name="username"  placeholder="login" pattern=".{4,}" title=" Минимум 4 символа"  required="">
+                                    <input type="text" class="form-control" name="username"  placeholder="login" pattern=".{4,}"
+                                           title=" Минимум 4 символа"  required="" th:value="${username}">
                                 </div>
                                 <div class="help-block with-errors text-danger"></div>
                             </div>
@@ -35,7 +36,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-unlock" aria-hidden="true"></i></span>
                                     </div>
-                                    <input type="password" name="password" class="form-control" placeholder="пароль" pattern=".{4,}" title=" Минимум 4 символа" required="">
+                                    <input type="password" name="password" class="form-control" placeholder="пароль" pattern=".{4,}"
+                                           title=" Минимум 4 символа" required="" th:value="${password}">
                                 </div>
                                 <div class="help-block with-errors text-danger"></div>
                             </div>
@@ -43,7 +45,7 @@
                     </div>
                     <div class="row">
                         <div class="checkbox checkbox-primary col-md-12">
-                            <input id="checkbox_remember" type="checkbox" name="new_user">
+                            <input id="checkbox_remember" type="checkbox" name="new_user" th:checked="${new_user}">
                             <label for="checkbox_remember">Новый пользователь</label>
                         </div>
                     </div>

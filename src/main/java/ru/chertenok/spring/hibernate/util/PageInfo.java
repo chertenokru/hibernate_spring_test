@@ -5,12 +5,30 @@ public class PageInfo {
     final private String TITLE;
     final private String SHABLON;
     final private boolean NEED_REPLACE;
+    final private String PERMISSION;
 
     public PageInfo(String URL, String TITLE, String SHABLON) {
         this.URL = URL;
         this.TITLE = TITLE;
         this.SHABLON = SHABLON;
         this.NEED_REPLACE = false;
+        this.PERMISSION = "";
+    }
+
+    public PageInfo(String URL, String TITLE, String SHABLON,String PERMISSION) {
+        this.URL = URL;
+        this.TITLE = TITLE;
+        this.SHABLON = SHABLON;
+        this.NEED_REPLACE = false;
+        this.PERMISSION = PERMISSION;
+    }
+
+    public boolean isNEED_REPLACE() {
+        return NEED_REPLACE;
+    }
+
+    public String getPERMISSION() {
+        return PERMISSION;
     }
 
     public PageInfo(String URL, String TITLE) {
@@ -18,13 +36,32 @@ public class PageInfo {
         this.TITLE = TITLE;
         this.SHABLON = "";
         this.NEED_REPLACE = false;
+        this.PERMISSION = "";
     }
+
+    public PageInfo(String URL, String TITLE,String[] PERMISSION) {
+        this.URL = URL;
+        this.TITLE = TITLE;
+        this.SHABLON = "";
+        this.NEED_REPLACE = false;
+        this.PERMISSION = "";
+    }
+
 
     public PageInfo(String URL, String TITLE, String SHABLON, boolean NEED_REPLACE) {
         this.URL = URL;
         this.TITLE = TITLE;
         this.SHABLON = SHABLON;
         this.NEED_REPLACE = NEED_REPLACE;
+        this.PERMISSION = "";
+    }
+
+    public PageInfo(String URL, String TITLE, String SHABLON, boolean NEED_REPLACE,String PERMISSION) {
+        this.URL = URL;
+        this.TITLE = TITLE;
+        this.SHABLON = SHABLON;
+        this.NEED_REPLACE = NEED_REPLACE;
+        this.PERMISSION = PERMISSION;
     }
 
     public String getSHABLON() {

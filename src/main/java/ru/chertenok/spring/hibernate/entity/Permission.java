@@ -3,6 +3,7 @@ package ru.chertenok.spring.hibernate.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "permissions")
 public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,14 @@ public class Permission {
     @Column(name = "description")
     private String description;
 
+    public Permission() {
+    }
+
+    public Permission(String name, String module, String description) {
+        this.name = name;
+        this.module = module;
+        this.description = description;
+    }
 
     public int getId() {
         return id;

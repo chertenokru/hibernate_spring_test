@@ -17,9 +17,10 @@ public class UserRole {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinTable(name = "role_permission",
-            joinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "role_id"),
+    inverseJoinColumns =  @JoinColumn(name = "permission_id"))
     private List<Permission> permissionList;
 
     public UserRole() {

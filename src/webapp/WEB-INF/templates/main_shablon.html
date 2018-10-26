@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div  th:replace="~{fragment/header :: head}"/>
 
 <body>
 
 <div th:replace ="~{fragment/header :: title}"/>
+<div class="m_container">
+    <!--th:if="${listRole.contains(breadcrumb[breadcrumb.length-1].getPERMISSION())}"-->
+<div th:insert="${contentPage}" class="m_content"/>
 
-<div th:replace="${contentPage}"/>
 
-<div th:insert="~{fragment/footer :: footer}"></div>
+
+<div th:insert="~{fragment/footer :: footer}" class="m_footer" ></div>
+</div>
 </body>
 </html>

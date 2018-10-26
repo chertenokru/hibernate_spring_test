@@ -14,16 +14,21 @@ body {
     margin-top: 20px;
 }
 .nav-menu {
-    margin: 10px 10px;
+    margin: 20px 20px;
 }
 .header{
     margin: 20px 0px;
     background-color: darkcyan;
     color: white;
 }
-.footer{
+.m_footer{
     margin: 40px 0px;
+    display: block;
 }
 .loginform{
     width: 50%;
+}
+.m_container{
+
+    Widt: 100%;
 }
