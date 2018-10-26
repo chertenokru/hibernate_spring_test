@@ -2,14 +2,14 @@
 
 <div class="fluid-container" th:fragment="navi(activeTab)"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-info ">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-info nav-menu">
         <a class="navbar-brand" href="/">GeekSpring</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse navbarSupportedContent" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
                 <li sec:authorize="hasRole('ADMIN')" class="nav-item">
                     <a class="nav-link" href="/admin">Admin Dashboard</a>
                 </li>
@@ -26,27 +26,23 @@
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
 
-                <div sec:authorize="isAuthenticated()">
-                    <li class="nav-item">
-                        <form th:action="@{/logout}" method="POST">
-                            <input type="submit" class="btn btn-danger" value="Logout"/>
-                        </form>
-                    </li>
-                </div>
-                <div sec:authorize="isAnonymous()">
-                    <li class="nav-item">
+            </ul>
 
-                        <form class="form-inline pull-xs-right"  method="post" th:action="@{/user/login}">
+                        <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+                            <input type="submit" class="btn btn-danger" value="Выйти"/>
+                        </form>
+
+
+
+                        <form class="form-inline pull-xs-right d-sm-inline-block input-group-sm"  method="post" th:action="@{/user/login}"
+                              sec:authorize="isAnonymous()">
                             <input id="login" type="text" class="form-control" name="username" value="" placeholder="Login">
                             <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">
-                            <input type="submit" class="btn btn-primary class="fas fa-sign-in-alt"" th:href="@{/user/login}" text="Login">lkl</input>
-                            <a class="btn btn-primary" th:href="@{/user/login?new_user=true}"><i class="fas fa-user-plus"></i>Register</a>
+                            <input type="submit" class="btn btn-primary " th:href="@{/user/login}" value="Войти"/>
+
+                            <a class="btn btn-success btn-outline-light" th:href="@{/user/loginForm?new_user=true}">Регистрация</a>
                         </form>
 
-                    </li>
-                </div>
-
-            </ul>
         </div>
     </nav>
     <div class="visible-md" style="height:80px;"></div>
