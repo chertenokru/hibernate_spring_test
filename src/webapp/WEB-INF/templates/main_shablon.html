@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <div  th:replace="~{fragment/header :: head}"/>
 
@@ -9,9 +8,8 @@
 
 <div th:replace ="~{fragment/header :: title}"/>
 <div class="m_container">
-    <!--th:if="${listRole.contains(breadcrumb[breadcrumb.length-1].getPERMISSION())}"-->
-<div th:insert="${contentPage}" class="m_content"/>
 
+<div th:insert="${breadcrumb[breadcrumb.length-1].getSHABLON()}" class="m_content"/>
 
 
 <div th:insert="~{fragment/footer :: footer}" class="m_footer" ></div>

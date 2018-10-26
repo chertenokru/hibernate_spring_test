@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import javax.sql.DataSource;
 
+import static ru.chertenok.spring.hibernate.config.Config.PAGE_MAP;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -24,26 +26,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (1)
         auth.jdbcAuthentication().dataSource(dataSource).
-                usersByUsernameQuery("SELECT NAME, PASSWORD, ENABLED FROM USERS WHERE NAME=?")
-                .authoritiesByUsernameQuery("SELECT u.name,p.name FROM users u" +
-                        " left JOIN  user_role ur ON u.id=ur.user_id " +
-                        " left JOIN role_permission rp ON rp.role_id=ur.role_id " +
-                        " left JOIN permissions p ON p.id=rp.permission_id " +
-                        " WHERE u.name = ?").rolePrefix("ROLE_");
-
+                usersByUsernameQuery(Config.SQL_GET_USER_LIST)
+                .authoritiesByUsernameQuery(Config.SQL_GET_USER_WITH_PERMISSION).rolePrefix(Config.PREFIX_PERMISSION);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/course/**").hasRole("COURSE-LIST")
+            //    .antMatchers("/course/**").hasRole("COURSE-LIST")
                 .and()
-                .formLogin().loginPage("/user/loginForm")
+                .formLogin().loginPage(PAGE_MAP.get(Config.PagesName.userLoginForm).getURL() )
                 .loginProcessingUrl("/authenticateTheUser").permitAll()
                 .and().logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/user/accessDenied");
-        ;
+                .exceptionHandling().accessDeniedPage(PAGE_MAP.get(Config.PagesName.userAccessDenied).getURL());
+
     }
 
 // sample
