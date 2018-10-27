@@ -9,6 +9,7 @@ import ru.chertenok.spring.hibernate.repositories.UserRepository;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,6 +31,14 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
+    public Optional<User> getUserById(int id){
+        return userRepository.findById(id);
+    }
+
+    public List<UserRole> getUserRolesById(int id){
+        return userRepository.getUserRoleList(id);
+    }
+
 
     @Transactional
     public User newUser(String username, String password, String role) {
@@ -46,5 +55,9 @@ public class UserService {
     @Transactional
     public User newUser(String username, String password) {
         return newUser(username, password, userRoleService.getDefaultRole());
+    }
+
+    public Optional<User> getUserByName(String name){
+        return userRepository.getUserByName(name);
     }
 }

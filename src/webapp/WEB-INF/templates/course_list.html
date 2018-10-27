@@ -1,5 +1,5 @@
-
-<table class="table table-bordered table-striped" xmlns:th="http://www.thymeleaf.org">
+<div xmlns:th="http://www.thymeleaf.org">
+<table class="table table-bordered table-striped" >
     <thead class="thead-dark">
     <tr>
         <th scope="col">Id</th>
@@ -22,3 +22,5 @@
     </tr>
 
 </table>
+<div th:insert="~{fragment/nav-page :: nav-page}"></div>
+</div>

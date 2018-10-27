@@ -7,5 +7,5 @@ import ru.chertenok.spring.hibernate.entity.UserRole;
 @Repository
 public interface UserRoleRepository extends CrudRepository<UserRole,Long>{
 
-    public UserRole getByName(String name);
+    UserRole getByName(String name);
 }

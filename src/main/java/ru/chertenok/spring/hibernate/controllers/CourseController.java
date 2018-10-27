@@ -27,7 +27,7 @@ public class CourseController {
     private CourseService courseService;
     private PermissionService permissionService;
 
-    {
+    static {
         // Добавляем права контроллера
         PERMISSION_MAP.put(PermissionName.courseList,
                 new Permission("COURSE_VIEW_LIST", "COURSE", "Просмотр списка курсов"));
@@ -40,6 +40,7 @@ public class CourseController {
                 , "course_detail", true, PERMISSION_MAP.get(PermissionName.courseDetail).getName()));
         //формируем  пути от страницы до корня, нормальные + ошибки, если есть обработка ошибок, чтоб вернуться на страницу назад
         BREADCRUMB_MAP.put(PagesName.courseList, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.courseList)});
+        BREADCRUMB_MAP.put(PagesName.mainShablon, new PageInfo[]{PAGE_MAP.get(PagesName.home)});
         BREADCRUMB_MAP.put(PagesName.courseDetail, new PageInfo[]{PAGE_MAP.get(PagesName.home), PAGE_MAP.get(PagesName.courseList),
                 PAGE_MAP.get(PagesName.courseDetail)});
         //для ошибок типа курс не существует

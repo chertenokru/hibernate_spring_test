@@ -15,21 +15,14 @@ import static ru.chertenok.spring.hibernate.config.Config.*;
 public class MainController {
     private DataGenerateService dataGenerateService;
     private PermissionService permissionService;
-    {
+    static {
         // Добавляем права контроллера
         PERMISSION_MAP.put(PermissionName.mainDataGenerate,
                 new Permission("MAIN_DATA_GENERATE", "MAIN", "Генерация случайных данных"));
         // добавляем страницы контроллера
-        PAGE_MAP.put(PagesName.home, new PageInfo("/", "Home", "index"));
-        PAGE_MAP.put(PagesName.page404, new PageInfo("/", "${message}", "page404"));
         PAGE_MAP.put(PagesName.mainShablon, new PageInfo("/", "${message}", "main_shablon"));
         PAGE_MAP.put(PagesName.dataGenerate, new PageInfo("/generate", "Home", "index",
                 PERMISSION_MAP.get(PermissionName.mainDataGenerate).getName()));
-        //формируем  пути от страницы до корня, нормальные + ошибки, если есть обработка ошибок, чтоб вернуться на страницу назад
-        BREADCRUMB_MAP.put(PagesName.home, new PageInfo[]{PAGE_MAP.get(PagesName.home)});
-        BREADCRUMB_MAP.put(PagesName.page404, new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.page404)});
-        BREADCRUMB_MAP.put(PagesName.mainShablon, new PageInfo[]{PAGE_MAP.get(PagesName.home)});
-        BREADCRUMB_MAP.put(PagesName.dataGenerate, new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.dataGenerate)});
     }
 
 
@@ -43,6 +36,12 @@ public class MainController {
         this.permissionService = permissionService;
         // проверяем наличие в бд и если нет, то заносим и даём права админу
         permissionService.registerPermission(PERMISSION_MAP.get(PermissionName.mainDataGenerate));
+        //формируем  пути от страницы до корня, нормальные + ошибки, если есть обработка ошибок, чтоб вернуться на страницу назад
+        BREADCRUMB_MAP.put(PagesName.home, new PageInfo[]{PAGE_MAP.get(PagesName.home)});
+        BREADCRUMB_MAP.put(PagesName.page404, new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.page404)});
+        BREADCRUMB_MAP.put(PagesName.mainShablon, new PageInfo[]{PAGE_MAP.get(PagesName.home)});
+        BREADCRUMB_MAP.put(PagesName.dataGenerate, new PageInfo[]{PAGE_MAP.get(PagesName.home),PAGE_MAP.get(PagesName.dataGenerate)});
+
     }
 
     @RequestMapping("/")

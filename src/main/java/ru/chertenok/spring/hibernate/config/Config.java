@@ -30,6 +30,16 @@ public class Config {
             " left JOIN permissions p ON p.id=rp.permission_id " +
             " WHERE u.name = ?";
 
+
+    static {
+        // добавляем страницы общие страницы, на которые могут ссылаться контроллеры и они должны быть добавлены первыми
+        PAGE_MAP.put(PagesName.home, new PageInfo("/", "Home", "index"));
+        PAGE_MAP.put(PagesName.page404, new PageInfo("/", "${message}", "page404"));
+        PAGE_MAP.put(PagesName.userAccessDenied, new PageInfo("/denied", "Доступ запрещен", "access-denied"));
+    }
+
+
+
     // возвращает список прав текущего юзера и добавляет его в модель
     public static List<String> addUserToModel(Model model) {
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
@@ -44,11 +54,11 @@ public class Config {
 
     public enum PagesName {
         home, page404, studentList, studentDetail, studentCourseEdit, courseList, courseDetail,
-        studentCourseEditAdd, studentCourseEditRemove, mainShablon, userList, userLogin, userLoginForm, dataGenerate, userAccessDenied
+        studentCourseEditAdd, studentCourseEditRemove, mainShablon, userList, userLogin, userLoginForm, dataGenerate, userDetail, userProfile, userAccessDenied
     }
 
     public enum PermissionName {
-        studentList, studentDetail, studentCourseEdit, courseList, courseDetail, userViewList, mainDataGenerate
+        studentList, studentDetail, studentCourseEdit, courseList, courseDetail, userViewList, studentCourseEditAdd, studentCourseEditRemove, userViewDetail, mainDataGenerate
     }
 
 }
