@@ -12,7 +12,7 @@ import java.util.EnumSet;
 
 public class WebStart {
     //    public static Logger logger =  Logger.getLogger(Main.class);
-    public static final int PORT = 8081;
+    public static final int PORT = 8080;
 
     public static void main(String[] args) {
 

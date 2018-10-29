@@ -5,13 +5,15 @@
 <div  th:replace="~{fragment/header :: head}"/>
 
 <body>
+<div class="m_container">
+    <div class="m_content">
 
 <div th:replace ="~{fragment/header :: title}"/>
-<div class="m_container">
-
-<div th:insert="${breadcrumb[breadcrumb.length-1].getSHABLON()}" class="m_content"/>
 
 
+<div th:insert="${breadcrumb[breadcrumb.length-1].getSHABLON()}" class="m_page" />
+
+    </div>
 <div th:insert="~{fragment/footer :: footer}" class="m_footer" ></div>
 </div>
 </body>
