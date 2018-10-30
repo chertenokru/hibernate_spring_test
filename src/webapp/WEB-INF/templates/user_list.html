@@ -1,0 +1,30 @@
+
+<table class="table table-bordered table-striped" xmlns:th="http://www.thymeleaf.org">
+    <thead class="thead-dark">
+    <tr>
+
+        <th scope="col">ID</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Активен</th>
+        <th scope="col">Пароль</th>
+        <th scope="col">Роли</th>
+        <th scope="col"></th>
+
+    </tr>
+    </thead>
+
+
+    <!--/*@thymesVar id="user" type="ru.chertenok.spring.hibernate.entity.User"*/-->
+    <tr th:each="user : ${userList}">
+
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.enabled}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.roleList}"></td>
+        <td > <a th:href="${userDetailLink.getURL_ReplaceID(user.id)}"  th:text="${userDetailLink.getTITLE()}"> Информация о пользователе </a> </td>
+
+
+    </tr>
+
+</table>

@@ -1,16 +1,33 @@
 package ru.chertenok.spring.hibernate.util;
 
+import org.springframework.ui.Model;
+import ru.chertenok.spring.hibernate.config.Config;
+
+import java.util.List;
+
+import static ru.chertenok.spring.hibernate.config.Config.*;
+
 public class PageInfo {
     final private String URL;
     final private String TITLE;
     final private String SHABLON;
     final private boolean NEED_REPLACE;
+    final private String PERMISSION;
 
     public PageInfo(String URL, String TITLE, String SHABLON) {
         this.URL = URL;
         this.TITLE = TITLE;
         this.SHABLON = SHABLON;
         this.NEED_REPLACE = false;
+        this.PERMISSION = "";
+    }
+
+    public PageInfo(String URL, String TITLE, String SHABLON, String PERMISSION) {
+        this.URL = URL;
+        this.TITLE = TITLE;
+        this.SHABLON = SHABLON;
+        this.NEED_REPLACE = false;
+        this.PERMISSION = PERMISSION;
     }
 
     public PageInfo(String URL, String TITLE) {
@@ -18,6 +35,15 @@ public class PageInfo {
         this.TITLE = TITLE;
         this.SHABLON = "";
         this.NEED_REPLACE = false;
+        this.PERMISSION = "";
+    }
+
+    public PageInfo(String URL, String TITLE, String[] PERMISSION) {
+        this.URL = URL;
+        this.TITLE = TITLE;
+        this.SHABLON = "";
+        this.NEED_REPLACE = false;
+        this.PERMISSION = "";
     }
 
     public PageInfo(String URL, String TITLE, String SHABLON, boolean NEED_REPLACE) {
@@ -25,6 +51,46 @@ public class PageInfo {
         this.TITLE = TITLE;
         this.SHABLON = SHABLON;
         this.NEED_REPLACE = NEED_REPLACE;
+        this.PERMISSION = "";
+    }
+
+
+    public PageInfo(String URL, String TITLE, String SHABLON, boolean NEED_REPLACE, String PERMISSION) {
+        this.URL = URL;
+        this.TITLE = TITLE;
+        this.SHABLON = SHABLON;
+        this.NEED_REPLACE = NEED_REPLACE;
+        this.PERMISSION = PERMISSION;
+    }
+
+    // проверяет права, добавляет в модель навигацию для шаблона
+    public static boolean makeAllPlease(Model model, Config.PagesName pagesName) {
+
+        String permission = PAGE_MAP.get(pagesName).getPERMISSION();
+        boolean result = false;
+        List<String> userPermissionList = Config.addUserToModel(model);
+
+        if (permission.equals("")) {
+            result = true;
+        } else {
+            result = userPermissionList.contains(permission);
+        }
+
+        if (result) {
+            model.addAttribute(BREADCRUMB, BREADCRUMB_MAP.get(pagesName));
+        } else {
+            model.addAttribute(BREADCRUMB, BREADCRUMB_MAP.get(PagesName.userAccessDenied));
+        }
+
+        return result;
+    }
+
+    public boolean isNEED_REPLACE() {
+        return NEED_REPLACE;
+    }
+
+    public String getPERMISSION() {
+        return (!PERMISSION.isEmpty()) ? Config.PREFIX_PERMISSION + PERMISSION : PERMISSION;
     }
 
     public String getSHABLON() {
@@ -47,4 +113,5 @@ public class PageInfo {
     public String getTITLE() {
         return TITLE;
     }
+
 }

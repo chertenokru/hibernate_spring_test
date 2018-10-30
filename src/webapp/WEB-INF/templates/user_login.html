@@ -1,0 +1,31 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+    <form class="loginform" >
+    <!--    <form  th:action="${loginPageURL.getURL()}" method="POST" > -->
+    <!--    <form  th:action="@{/authenticateTheUser}" method="POST" > -->
+
+    <div th:if="${param.error} != null">
+        <i>Логин или пароль не верны! или у вас нет прав</i>
+    </div>
+    <div class="form-group">
+        <label for="username">Логин</label>
+        <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
+               placeholder="Укажите логин" name="username">
+
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Пароль" name="password">
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1"
+        name ="new_user" value="false">
+        <label class="form-check-label" for="exampleCheck1">Новый пользователь</label>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>
+
+
+</div>

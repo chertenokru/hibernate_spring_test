@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
-    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
-    <!--/*@thymesVar id="course" type="ru.chertenok.spring.hibernate.entity.Course"*/-->
-    <title th:text="${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${course.description}">Информация о курсе</title>
-
-</head>
-<body>
-<!--/*@thymesVar id="course" type="ru.chertenok.spring.hibernate.entity.Course"*/-->
-<div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}+' '+${course.description}" th:insert="~{header :: header}"></div>
+<div xmlns:th="http://www.thymeleaf.org">
 На курсе обучаются студенты :
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" >
     <thead class="thead-dark">
     <tr>
     <th scope="col">Id</th>
@@ -28,10 +11,8 @@
         <tr th:each="student : ${course.students}" >
             <td th:text="${student.id}"/>
             <td th:text="${student.name}"/>
-            <td><a th:href="${studentDetailPage.getURL_ReplaceID(student.id)}" th:text="${studentDetailPage.getTITLE()}">Информация о студенте</a></td>
+            <td><a th:href="${studentDetailPageLink.getURL_ReplaceID(student.id)}" th:text="${studentDetailPageLink.getTITLE()}">Информация о студенте</a></td>
         </tr>
 
 </table>
-<div th:insert="~{footer :: footer}"></div>
-</body>
-</html>
+</div>

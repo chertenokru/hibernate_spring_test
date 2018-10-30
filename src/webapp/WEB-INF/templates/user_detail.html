@@ -1,0 +1,46 @@
+<div xmlns:th="http://www.thymeleaf.org">
+
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="card">
+            <h4 class="card-header" th:text="'Роли и права пользователя '+${user.name}">Роли и права пользователя </h4>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td>ID</td>
+                        <td th:text="${user.id}"></td>
+                    </tr>
+                    <tr>
+                        <td>Имя</td>
+                        <td th:text="${user.name}"></td>
+                    </tr>
+                    <tr>
+                        <td>Активен</td>
+                        <td th:text="${user.enabled}"></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td th:text="${user.password}"></td>
+                    </tr>
+                </table>
+                <div th:each="role : ${userRole}">
+                    <p th:text="'Роль - '+${role.name}">Название роли</p>
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Разрешение</th>
+                            <th scope="col">Описание</th>
+                            <th scope="col">Модуль</th>
+                        </tr>
+                        </thead>
+                        <!--/*@thymesVar id="user" type="ru.chertenok.spring.hibernate.entity.User"*/-->
+                        <tr th:each="permission : ${role.permissionList}">
+                            <td th:text="${permission.name}">Имя</td>
+                            <td th:text="${permission.description}">Описание</td>
+                            <td th:text="${permission.module}">Модуль</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

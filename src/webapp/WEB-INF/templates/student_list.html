@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
-    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
-
-</head>
-<body>
-<div th:with="title=${breadcrumb[breadcrumb.length-1].getTITLE()}" th:insert="~{header :: header}"></div>
-
-<table class="table table-bordered table-striped">
+<div xmlns:th="http://www.thymeleaf.org">
+<table class="table table-bordered table-striped" >
     <thead class="thead-dark">
     <tr>
         <th>Id</th>
@@ -27,11 +12,9 @@
         <td th:text="${student.id}"/>
         <td th:text="${student.name}"/>
         <td th:text="${student.coursesCount}"/>
-        <td><a th:href="${studentPage.getURL_ReplaceID(student.id)}" th:text="${studentPage.getTITLE()}">Информация о
+        <td><a th:href="${studentDetailPageLink.getURL_ReplaceID(student.id)}" th:text="${studentDetailPageLink.getTITLE()}">Информация о
             студенте</a></td>
     </tr>
 </table>
-<div th:insert="~{nav-page :: nav-page}"></div>
-<div th:insert="~{footer :: footer}"></div>
-</body>
-</html>
+<div th:replace="~{fragment/nav-page :: nav-page}"/>
+</div>
