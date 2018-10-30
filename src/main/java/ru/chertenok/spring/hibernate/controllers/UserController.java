@@ -83,8 +83,8 @@ public class UserController {
     ) {
 
         if (newUser) {
+            if (!userService.getUserByName(username).isPresent())
             userService.newUser(username, password);
-
         }
         model.addAttribute("new_user", newUser);
         model.addAttribute("username", username);
