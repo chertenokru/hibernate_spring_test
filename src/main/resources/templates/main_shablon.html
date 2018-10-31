@@ -2,16 +2,16 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div  th:replace="~{fragment/header :: head}"/>
+<div  th:replace="~{fragment/header :: head}"></div>
 
 <body>
 <div class="m_container">
     <div class="m_content">
 
-<div th:replace ="~{fragment/header :: title}"/>
+<div th:replace ="~{fragment/header :: title}"></div>
 
 
-<div th:insert="${breadcrumb[breadcrumb.length-1].getSHABLON()}" class="m_page" />
+<div th:insert="${breadcrumb[breadcrumb.length-1].getSHABLON()}" class="m_page"></div>
 
     </div>
 <div th:insert="~{fragment/footer :: footer}" class="m_footer" ></div>

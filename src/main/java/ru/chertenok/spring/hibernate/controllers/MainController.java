@@ -21,7 +21,7 @@ public class MainController {
                 new Permission("MAIN_DATA_GENERATE", "MAIN", "Генерация случайных данных"));
         // добавляем страницы контроллера
         PAGE_MAP.put(PagesName.mainShablon, new PageInfo("/", "${message}", "main_shablon"));
-        PAGE_MAP.put(PagesName.dataGenerate, new PageInfo("/generate", "Home", "index",
+        PAGE_MAP.put(PagesName.dataGenerate, new PageInfo("/generate", "Генерация случайных данных", "index",
                 PERMISSION_MAP.get(PermissionName.mainDataGenerate).getName()));
     }
 
@@ -48,6 +48,10 @@ public class MainController {
     public String index(Model model) {
         model.addAttribute("mainMessage", "");
         PageInfo.makeAllPlease(model,PagesName.home);
+        model.addAttribute("studentListURL",PAGE_MAP.get(PagesName.studentList));
+        model.addAttribute("courseListURL",PAGE_MAP.get(PagesName.courseList));
+        model.addAttribute("datagenerateURL",PAGE_MAP.get(PagesName.dataGenerate));
+        model.addAttribute("userListURL",PAGE_MAP.get(PagesName.userList));
         return PAGE_MAP.get(PagesName.mainShablon).getSHABLON();
     }
 

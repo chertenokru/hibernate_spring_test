@@ -17,7 +17,7 @@
         <td th:text="${course.description}"/>
         <td th:text="${course.length}"/>
         <td th:text="${course.studentCount}"/>
-        <td><a th:href="${courseDetailPageLink.getURL_ReplaceID(course.id)}"
+        <td><a th:href="@{${courseDetailPageLink.getURL_ReplaceID(course.id)}}"
                th:text="${courseDetailPageLink.getTITLE()}">Информация о курсе</a></td>
     </tr>
 

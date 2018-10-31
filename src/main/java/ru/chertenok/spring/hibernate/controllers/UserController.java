@@ -12,6 +12,7 @@ import ru.chertenok.spring.hibernate.services.UserService;
 import ru.chertenok.spring.hibernate.util.PageInfo;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 import static ru.chertenok.spring.hibernate.config.Config.*;
@@ -76,7 +77,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(
-            Model model, HttpServletRequest request,
+            Model model, HttpServletRequest request, HttpServletResponse response,
             @RequestParam(name = "username") String username,
             @RequestParam(name = "password") String password,
             @RequestParam(name = "new_user", defaultValue = "false") boolean newUser
@@ -89,7 +90,7 @@ public class UserController {
         model.addAttribute("new_user", newUser);
         model.addAttribute("username", username);
         model.addAttribute("password", password);
-        return "forward:/authenticateTheUser";
+        return "forward:/app/authenticateTheUser";
 
     }
 

@@ -4,7 +4,7 @@
 
     <p th:text="'Студент обучается на '+${student.courses.size()} +' курсах '">Студент обучается</p>
 
-    <a href="/student/" th:href="${studentCourseEditPageLink.getURL_ReplaceID(student.id)}"
+    <a href="/student/" th:href="@{${studentCourseEditPageLink.getURL_ReplaceID(student.id)}}"
        th:text="${studentCourseEditPageLink.getTITLE()}">Редактировать список курсов</a>
 
 
@@ -21,7 +21,7 @@
             <td th:text="${course.id}"/>
             <td th:text="${course.description}"/>
             <td th:text="${course.courseLength}"/>
-            <td><a th:href="${courseDetailPageLink.getURL_ReplaceID(course.id)}"
+            <td><a th:href="@{${courseDetailPageLink.getURL_ReplaceID(course.id)}}"
                    th:text="${courseDetailPageLink.getTITLE()}">Информация о курсе</a></td>
         </tr>
 

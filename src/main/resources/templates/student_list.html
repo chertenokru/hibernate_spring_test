@@ -12,7 +12,7 @@
         <td th:text="${student.id}"/>
         <td th:text="${student.name}"/>
         <td th:text="${student.coursesCount}"/>
-        <td><a th:href="${studentDetailPageLink.getURL_ReplaceID(student.id)}" th:text="${studentDetailPageLink.getTITLE()}">Информация о
+        <td><a th:href="@{${studentDetailPageLink.getURL_ReplaceID(student.id)}}" th:text="${studentDetailPageLink.getTITLE()}">Информация о
             студенте</a></td>
     </tr>
 </table>

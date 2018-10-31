@@ -27,14 +27,14 @@
                  aria-labelledby="list-profile-list">
                 <p th:utext="'Курс: '+${course.description}+'<br>ID: '+${course.id}+'<br>Занятий: '+${course.courseLength}">
                     Курс: xxxxx <br> ID: xxxxx <br>Занятий: 5</p>
-                <a class="btn btn-danger" th:href="${courseRemoveLink.getURL_ReplaceID2(student.id,course.id)}"
+                <a class="btn btn-danger" th:href="@{${courseRemoveLink.getURL_ReplaceID2(student.id,course.id)}}"
                    th:text="${courseRemoveLink.getTITLE()}" role="button">Удалить курс</a>
             </div>
             <div th:each="course: ${courseListNew}" class="tab-pane fade" th:id="'list-'+${course.id}" role="tabpanel"
                  aria-labelledby="list-profile-list">
                 <p th:utext="'Курс: '+${course.description}+'<br>ID: '+${course.id}+'<br>Занятий: '+${course.courseLength}">
                     Курс: xxxxx <br> ID: xxxxx <br>Занятий: 5</p>
-                <a class="btn btn-primary" th:href="${courseAddLink.getURL_ReplaceID2(student.id,course.id)}"
+                <a class="btn btn-primary" th:href="@{${courseAddLink.getURL_ReplaceID2(student.id,course.id)}}"
                    th:text="${courseAddLink.getTITLE()}" role="button">Добавить курс</a>
 
             </div>

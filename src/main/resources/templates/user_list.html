@@ -22,7 +22,7 @@
         <td th:text="${user.enabled}"></td>
         <td th:text="${user.password}"></td>
         <td th:text="${user.roleList}"></td>
-        <td > <a th:href="${userDetailLink.getURL_ReplaceID(user.id)}"  th:text="${userDetailLink.getTITLE()}"> Информация о пользователе </a> </td>
+        <td > <a th:href="@{${userDetailLink.getURL_ReplaceID(user.id)}}"  th:text="${userDetailLink.getTITLE()}"> Информация о пользователе </a> </td>
 
 
     </tr>
