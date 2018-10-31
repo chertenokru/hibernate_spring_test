@@ -2,7 +2,7 @@
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-info nav-menu">
-        <a class="navbar-brand" href="/">GeekSpring</a>
+        <a class="navbar-brand" th:href="@{/}" href="/">GeekStudents</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,8 @@
             </ul>
             <div class="prof" sec:authorize="isAuthenticated()">
                 <div  class="prof">
-                    <a  class="btn btn-success btn-outline-light" href="/user/profile"> <i class="fas fa-address-book"></i>
+                    <a  class="btn btn-success btn-outline-light" href="/user/profile"
+                        th:href="@{/user/profile}"> <i class="fas fa-address-book"></i>
                         <i sec:authentication="principal.username"></i> </a>
 
                 </div><div></div>

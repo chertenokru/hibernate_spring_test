@@ -7,9 +7,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import ru.chertenok.spring.hibernate.services.UserService;
 
 import javax.sql.DataSource;
 
+import static ru.chertenok.spring.hibernate.config.Config.*;
 import static ru.chertenok.spring.hibernate.config.Config.PAGE_MAP;
 
 @Configuration
@@ -17,6 +19,18 @@ import static ru.chertenok.spring.hibernate.config.Config.PAGE_MAP;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
+    private UserService userService;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setCustomAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+    }
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -26,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception { // (1)
         auth.jdbcAuthentication().dataSource(dataSource).
-                usersByUsernameQuery(Config.SQL_GET_USER_LIST)
-                .authoritiesByUsernameQuery(Config.SQL_GET_USER_WITH_PERMISSION).rolePrefix(Config.PREFIX_PERMISSION);
+                usersByUsernameQuery(SQL_GET_USER_LIST)
+                .authoritiesByUsernameQuery(SQL_GET_USER_WITH_PERMISSION).rolePrefix(PREFIX_PERMISSION);
     }
 
     @Override
@@ -35,11 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/").permitAll()
             //    .antMatchers("/course/**").hasRole("COURSE-LIST")
                 .and()
-                .formLogin().loginPage(PAGE_MAP.get(Config.PagesName.userLoginForm).getURL() )
+                .formLogin().loginPage(PAGE_MAP.get(PagesName.userLoginForm).getURL() )
                 .loginProcessingUrl("/authenticateTheUser").permitAll()
                 .and().logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage(PAGE_MAP.get(Config.PagesName.userAccessDenied).getURL());
+                .exceptionHandling().accessDeniedPage(PAGE_MAP.get(PagesName.userAccessDenied).getURL());
 
     }
 
