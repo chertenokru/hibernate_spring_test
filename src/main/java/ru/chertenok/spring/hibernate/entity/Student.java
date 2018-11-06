@@ -2,6 +2,9 @@ package ru.chertenok.spring.hibernate.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +21,7 @@ public class Student implements Serializable {
 
 
     //@ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     @ManyToMany( cascade =  CascadeType.ALL)
     @JoinTable(name = "education",
             joinColumns = @JoinColumn(name = "student_id"),

@@ -33,7 +33,7 @@ public class DataGenerateService {
     public void generateData() {
 
         studentService.deleteAll();
-        courseService.daleteAll();
+        courseService.deleteAll();
 
         List<Course> courseList = new ArrayList<>();
         for (int i = 0; i < random.nextInt(37) + 13; i++) {
