@@ -1,5 +1,6 @@
 package ru.chertenok.spring.hibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -18,7 +19,7 @@ public class Course implements Serializable {
     private int courseLength;
 
     @ManyToMany (mappedBy = "courses")
-    @JsonIgnore
+    @JsonBackReference
     private List<Student> students;
 
 

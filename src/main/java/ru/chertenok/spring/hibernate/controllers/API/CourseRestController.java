@@ -1,7 +1,8 @@
-package ru.chertenok.spring.hibernate.controllers;
+package ru.chertenok.spring.hibernate.controllers.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.services.CourseService;
@@ -36,22 +37,22 @@ public class CourseRestController {
         return theCourse;
     }
 
-    @PutMapping("/courses")
+    @PutMapping( "/courses")
     public Course updateCourse(@RequestBody Course theCourse) {
-        theCourse = courseService.update(theCourse);
+        theCourse = courseService.update_API(theCourse);
 
         return theCourse;
     }
 
     @DeleteMapping("/courses/{id}")
     public int deleteStudent(@PathVariable int id) {
-        courseService.deleteByID(id);
+        courseService.deleteByID_API(id);
         return HttpStatus.OK.value();
     }
 
     @DeleteMapping("/courses")
     public int deleteStudents() {
-        courseService.deleteAll();
+        courseService.deleteAll_API();
         return HttpStatus.OK.value();
     }
 

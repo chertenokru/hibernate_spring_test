@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.interfaces.CoursesWithStudentCount;
 import ru.chertenok.spring.hibernate.repositories.CourseRepository;
-import ru.chertenok.spring.hibernate.util.ResourceNotFound;
+import ru.chertenok.spring.hibernate.util.ErrorAPI;
+import ru.chertenok.spring.hibernate.util.ResourceNotFoundErrorAPI;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -32,7 +33,6 @@ public class CourseService {
     }
 
 
-
     @Transactional
     public Optional<Course> getCourseyID(int id) {
         Optional<Course> cource = courseRepository.findById(id);
@@ -44,12 +44,12 @@ public class CourseService {
     public Course getCourseyID_API(int id) {
         Optional<Course> cource = courseRepository.findById(id);
         if (cource.isPresent()) cource.get().getStudents().size();
-        else throw new ResourceNotFound("Курс с id = " + id + " не нвйден");
+        else throw new ResourceNotFoundErrorAPI("Курс с id = " + id + " не нвйден");
         return cource.get();
     }
 
 
-    public List<Course> findAllCourses(){
+    public List<Course> findAllCourses() {
         return (List<Course>) courseRepository.findAll();
     }
 
@@ -61,12 +61,19 @@ public class CourseService {
     }
 
 
-    public long getPageCount(){
-        return courseRepository.count()/pageSize+ ((courseRepository.count() % pageSize)>0?1:0);
+    public long getPageCount() {
+        return courseRepository.count() / pageSize + ((courseRepository.count() % pageSize) > 0 ? 1 : 0);
 
     }
-    public void deleteAll() {
-        courseRepository.deleteAll();
+
+    public void deleteAll_API() {
+
+        try {
+            courseRepository.deleteAll();
+        } catch (Exception e) {
+            throw new ErrorAPI("Не удалось удалить курсы. Убедитесь, что нет студентов, записанных на курсы! \n" +
+                    " Ошибка: " + e);
+        }
     }
 
     public Course save(Course course) {
@@ -74,19 +81,27 @@ public class CourseService {
     }
 
 
-    public Course update(Course theCourse) {
-        if (courseRepository.existsById(theCourse.getId()))
-           return  courseRepository.save(theCourse);
-         else
-            throw new ResourceNotFound("Курс с таким id = "+theCourse.getId()+" не найден");
+    public Course update_API(Course theCourse) {
+        Optional<Course> course = courseRepository.findById(theCourse.getId());
+        if (course.isPresent()) {
+            // сохраняем записанных студентов
+            theCourse.setStudents(course.get().getStudents());
+            return courseRepository.save(theCourse);
+        } else
+            throw new ResourceNotFoundErrorAPI("Курс с таким id = " + theCourse.getId() + " не найден");
     }
 
-    public void deleteByID(int id){
+    public void deleteByID_API(int id) {
         Optional<Course> course = courseRepository.findById(id);
         if (course.isPresent())
-             courseRepository.delete(course.get());
+            try {
+                courseRepository.delete(course.get());
+            } catch (Exception e) {
+                throw new ErrorAPI("Не удалось удалить курс с id = " + id + ". Убедитесь, что нет студентов, записанных на этот курс! \n" +
+                        " Ошибка: " + e);
+            }
         else
-            throw new ResourceNotFound("Курс с таким id = "+id+" не найден");
+            throw new ResourceNotFoundErrorAPI("Курс с таким id = " + id + " не найден");
 
     }
 }

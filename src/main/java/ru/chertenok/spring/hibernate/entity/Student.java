@@ -21,7 +21,7 @@ public class Student implements Serializable {
 
 
     //@ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
+    @JsonBackReference
     @ManyToMany( cascade =  CascadeType.ALL)
     @JoinTable(name = "education",
             joinColumns = @JoinColumn(name = "student_id"),
