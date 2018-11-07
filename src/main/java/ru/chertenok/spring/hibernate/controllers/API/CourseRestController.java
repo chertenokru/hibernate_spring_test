@@ -2,7 +2,6 @@ package ru.chertenok.spring.hibernate.controllers.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.chertenok.spring.hibernate.entity.Course;
 import ru.chertenok.spring.hibernate.services.CourseService;
@@ -37,7 +36,7 @@ public class CourseRestController {
         return theCourse;
     }
 
-    @PutMapping( "/courses")
+    @PutMapping("/courses")
     public Course updateCourse(@RequestBody Course theCourse) {
         theCourse = courseService.update_API(theCourse);
 

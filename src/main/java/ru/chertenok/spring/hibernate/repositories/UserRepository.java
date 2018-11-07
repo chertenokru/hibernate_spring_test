@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User,Integer> {
-    @Query( "select u.roleList from User u where u.id = :id")
+public interface UserRepository extends CrudRepository<User, Integer> {
+    @Query("select u.roleList from User u where u.id = :id")
     List<UserRole> getUserRoleList(@Param("id") int id);
 
     //@Query( "select u from User u where u. = :id")
