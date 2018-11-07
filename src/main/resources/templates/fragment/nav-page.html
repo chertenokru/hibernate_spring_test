@@ -2,7 +2,7 @@
     <ul class="pagination">
         <li class="page-item" th:each="_page: ${paginationList}"
             th:class="(${page} eq ${_pageStat.count})?('page-item active'):('page-item')">
-            <a class="page-link" th:href="${_page.getURL()}"
+            <a class="page-link" th:href="@{${_page.getURL()}}"
                th:text="${_page.getTITLE()}">1</a></li>
     </ul>
 </nav>
